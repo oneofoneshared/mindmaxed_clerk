@@ -10,6 +10,31 @@ interface Message {
   audioUrl?: string;
 }
 
+type MySpeechRecognitionEvent = Event & {
+  resultIndex: number;
+  results: Array<{ 0: { transcript: string }; isFinal: boolean }>;
+};
+
+type MySpeechRecognitionErrorEvent = Event & {
+  error: string;
+};
+
+type Recognition = {
+  continuous: boolean;
+  interimResults: boolean;
+  lang: string;
+  start: () => void;
+  stop: () => void;
+  abort: () => void;
+  onresult: ((event: MySpeechRecognitionEvent) => void) | null;
+  onerror: ((event: MySpeechRecognitionErrorEvent) => void) | null;
+  onaudioend?: (() => void) | null;
+  onaudiostart?: (() => void) | null;
+  onstart?: (() => void) | null;
+  onend?: (() => void) | null;
+  // Add any other properties you use
+};
+
 export default function VoiceAssistant() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState("");
@@ -156,21 +181,25 @@ export default function VoiceAssistant() {
     }
 
     try {
-      const hasSpeechRecognition =
-        "webkitSpeechRecognition" in window || "SpeechRecognition" in window;
+      const SpeechRecognition =
+        (window as unknown as { SpeechRecognition?: new () => Recognition })
+          .SpeechRecognition ||
+        (
+          window as unknown as {
+            webkitSpeechRecognition?: new () => Recognition;
+          }
+        ).webkitSpeechRecognition;
+      const recognition: Recognition | null = SpeechRecognition
+        ? new SpeechRecognition()
+        : null;
 
-      if (!hasSpeechRecognition) {
+      if (!recognition) {
         setTranscription(
           "Voice input not supported in this browser. Please use text input."
         );
         setTimeout(() => setTranscription(""), 3000);
         return;
       }
-
-      const SpeechRecognition =
-        (window as any).SpeechRecognition ||
-        (window as any).webkitSpeechRecognition;
-      const recognition = new SpeechRecognition();
 
       recognition.continuous = false;
       recognition.interimResults = true;
@@ -184,12 +213,17 @@ export default function VoiceAssistant() {
         setAudioLevel(0.3);
       };
 
-      recognition.onresult = (event: any) => {
+      recognition.onresult = (event: MySpeechRecognitionEvent) => {
         let interimTranscript = "";
 
-        for (let i = event.resultIndex; i < event.results.length; i++) {
-          const transcript = event.results[i][0].transcript;
-          if (event.results[i].isFinal) {
+        for (
+          let i = (event as MySpeechRecognitionEvent).resultIndex;
+          i < (event as MySpeechRecognitionEvent).results.length;
+          i++
+        ) {
+          const transcript = (event as MySpeechRecognitionEvent).results[i][0]
+            .transcript;
+          if ((event as MySpeechRecognitionEvent).results[i].isFinal) {
             finalTranscript += transcript;
           } else {
             interimTranscript += transcript;
@@ -199,7 +233,7 @@ export default function VoiceAssistant() {
         setTranscription(finalTranscript + interimTranscript);
       };
 
-      recognition.onerror = (event: any) => {
+      recognition.onerror = (event: MySpeechRecognitionErrorEvent) => {
         setIsListening(false);
         setAudioLevel(0);
 
