@@ -1,0 +1,52 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a855f7;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fbbf24;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Outer circle/ring -->
+  <circle cx="60" cy="60" r="55" stroke="url(#logoGradient)" stroke-width="3" fill="none" opacity="0.3"/>
+  
+  <!-- Main brain/mind shape -->
+  <path d="M30 45 Q35 25 60 30 Q85 35 85 55 Q85 75 70 85 Q55 90 45 85 Q30 80 25 65 Q20 50 30 45 Z" fill="url(#logoGradient)"/>
+  
+  <!-- Inner neural network -->
+  <circle cx="45" cy="45" r="3" fill="white" opacity="0.9"/>
+  <circle cx="60" cy="40" r="2.5" fill="white" opacity="0.9"/>
+  <circle cx="70" cy="50" r="2" fill="white" opacity="0.9"/>
+  <circle cx="55" cy="55" r="2.5" fill="white" opacity="0.9"/>
+  <circle cx="40" cy="60" r="2" fill="white" opacity="0.9"/>
+  <circle cx="65" cy="65" r="2" fill="white" opacity="0.9"/>
+  
+  <!-- Neural connections -->
+  <path d="M45 45 L60 40 L70 50 M60 40 L55 55 M55 55 L40 60 M55 55 L65 65 M70 50 L65 65" stroke="white" stroke-width="1.5" opacity="0.7" fill="none"/>
+  
+  <!-- AI enhancement elements -->
+  <rect x="75" y="35" width="8" height="6" rx="1" fill="url(#accentGradient)" opacity="0.8"/>
+  <rect x="77" y="37" width="4" height="2" rx="0.5" fill="white"/>
+  
+  <!-- Data flow indicators -->
+  <circle cx="88" cy="45" r="1.5" fill="url(#accentGradient)">
+    <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="92" cy="50" r="1" fill="url(#accentGradient)">
+    <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" begin="0.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="88" cy="55" r="1.5" fill="url(#accentGradient)">
+    <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" begin="1s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Bottom text element (optional) -->
+  <text x="60" y="100" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="600" fill="url(#logoGradient)">MindMaxED</text>
+  
+  <!-- Geometric accent -->
+  <polygon points="15,75 25,70 25,80" fill="url(#accentGradient)" opacity="0.6"/>
+  <polygon points="95,30 105,25 105,35" fill="url(#accentGradient)" opacity="0.6"/>
+</svg>

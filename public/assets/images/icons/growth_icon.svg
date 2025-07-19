@@ -1,0 +1,35 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="growthGradient" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Growth chart bars -->
+  <rect x="8" y="32" width="4" height="8" rx="2" fill="url(#growthGradient)" opacity="0.6"/>
+  <rect x="14" y="28" width="4" height="12" rx="2" fill="url(#growthGradient)" opacity="0.7"/>
+  <rect x="20" y="24" width="4" height="16" rx="2" fill="url(#growthGradient)" opacity="0.8"/>
+  <rect x="26" y="18" width="4" height="22" rx="2" fill="url(#growthGradient)" opacity="0.9"/>
+  <rect x="32" y="12" width="4" height="28" rx="2" fill="url(#growthGradient)"/>
+  
+  <!-- Upward arrow -->
+  <path d="M38 20 L42 16 L46 20 M42 16 L42 32" stroke="url(#growthGradient)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  
+  <!-- Growth trajectory line -->
+  <path d="M10 38 Q16 34 22 30 Q28 26 34 20 Q38 16 42 12" stroke="white" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.8"/>
+  
+  <!-- Data points -->
+  <circle cx="10" cy="38" r="2" fill="white"/>
+  <circle cx="16" cy="34" r="2" fill="white"/>
+  <circle cx="22" cy="30" r="2" fill="white"/>
+  <circle cx="28" cy="26" r="2" fill="white"/>
+  <circle cx="34" cy="20" r="2" fill="white"/>
+  
+  <!-- Base line -->
+  <line x1="6" y1="42" x2="38" y2="42" stroke="white" stroke-width="1" opacity="0.4"/>
+  
+  <!-- Success indicators -->
+  <circle cx="38" cy="8" r="3" fill="#10b981" opacity="0.8"/>
+  <path d="M36.5 8 L37.5 9 L39.5 7" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>
