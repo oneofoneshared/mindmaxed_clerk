@@ -314,7 +314,7 @@ export default function Home() {
               <div className="coach-content">
                 <h3 className="coach-name">Dustin Dean, PMHNP-BC</h3>
                 <p className="coach-title">
-                  "The Dean of Zen" | Transformational Coach
+                  &quot;The Dean of Zen&quot; | Transformational Coach
                 </p>
                 <p className="coach-description">
                   Nationally certified Psychiatric-Mental Health Nurse
@@ -344,7 +344,7 @@ export default function Home() {
               <div className="coach-content">
                 <h3 className="coach-name">Rashida Dean</h3>
                 <p className="coach-title">
-                  Life Coach & Women's Empowerment Strategist
+                  Life Coach &amp; Women&apos;s Empowerment Strategist
                 </p>
                 <p className="coach-description">
                   15+ years of experience coaching individuals and families
