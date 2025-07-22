@@ -10,7 +10,8 @@ export default function DeanOfZenPage() {
     user?.publicMetadata?.hasDeanOfZenSubscription === true;
 
   const handleSubscribe = () => {
-    openUserProfile({ path: "billing" } as any);
+    // @ts-expect-error Clerk billing path is supported but not in types
+    openUserProfile({ path: "billing" });
   };
 
   return (
