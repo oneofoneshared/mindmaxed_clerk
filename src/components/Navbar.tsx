@@ -2,7 +2,7 @@ import { SignInButton, SignUpButton, UserButton, useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FaLock } from "react-icons/fa";
+import { GiLotus } from "react-icons/gi";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -18,17 +18,18 @@ export default function Navbar() {
     { href: "/#testimonials", label: "Testimonials", anchor: true },
     { href: "/about", label: "About" },
     { href: "/contact", label: "Contact" },
+    { href: "/dean-of-zen", label: "Dean of Zen", anchor: false },
   ];
 
   // Always show Dean of Zen tab for signed-in users, but it will be locked if not subscribed
   const signedInLinks = [
     { href: "/#features", label: "Features", anchor: true },
+    { href: "/dashboard", label: "Dashboard", anchor: false },
     { href: "/#coaches", label: "Coaches", anchor: true },
     { href: "/#pricing", label: "Pricing", anchor: true },
     { href: "/#testimonials", label: "Testimonials", anchor: true },
     { href: "/about", label: "About" },
     { href: "/contact", label: "Contact" },
-    { href: "/dashboard", label: "Dashboard", anchor: false },
     { href: "/dean-of-zen", label: "Dean of Zen", anchor: false },
   ];
 
@@ -48,44 +49,43 @@ export default function Navbar() {
                 height={40}
               />
             </Link>
-            <span className="brand">MindMaxED AI</span>
+            <Link
+              href="/"
+              className="brand"
+              style={{
+                marginLeft: 8,
+                textDecoration: "none",
+                color: "inherit",
+                fontWeight: 700,
+              }}
+            >
+              MindMaxED AI
+            </Link>
           </div>
           <div className="nav-links">
             {navLinks.map((link) => {
-              // Show Dean of Zen tab as locked if user doesn't have the subscription
-              if (
-                link.label === "Dean of Zen" &&
-                isSignedIn &&
-                !hasDeanOfZenSubscription
-              ) {
+              // Highlight Dean of Zen tab
+              if (link.label === "Dean of Zen") {
                 return (
-                  <span
+                  <Link
                     key={link.href}
-                    className="nav-link-locked"
+                    href={link.href}
+                    className={`nav-link-zen${
+                      pathname === link.href ? " active" : ""
+                    }`}
                     style={{
-                      color: "#888",
-                      cursor: "not-allowed",
                       display: "inline-flex",
                       alignItems: "center",
-                      opacity: 0.6,
-                      pointerEvents: "auto",
-                      marginLeft: 16,
-                      marginRight: 8,
-                      position: "relative",
+                      gap: 6,
                     }}
-                    title="Requires Dean of Zen subscription"
-                    onClick={(e) => e.preventDefault()}
                   >
+                    <GiLotus style={{ fontSize: 18, color: "#f59e0b" }} />
                     {link.label}
-                    <FaLock style={{ marginLeft: 6, fontSize: 14 }} />
-                  </span>
+                  </Link>
                 );
               }
-              // Hide Dashboard and Dean of Zen for signed out users
-              if (
-                !isSignedIn &&
-                (link.label === "Dashboard" || link.label === "Dean of Zen")
-              ) {
+              // Hide Dashboard for signed out users, but always show Dean of Zen
+              if (!isSignedIn && link.label === "Dashboard") {
                 return null;
               }
               return link.anchor ? (

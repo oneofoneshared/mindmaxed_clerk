@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import ElevenLabsConvaiWidget from "../components/ElevenLabsConvaiWidget";
 
 // Custom hook for pricing card interactivity
 function usePricingCards() {
@@ -148,7 +149,7 @@ export default function Home() {
             }}
           >
             <Link
-              href="/#pricing"
+              href="/dean-of-zen"
               className="cta-button primary"
               style={{
                 transition: "transform 0.15s, box-shadow 0.15s",
@@ -167,7 +168,7 @@ export default function Home() {
                   "0 2px 8px rgba(99,102,241,0.08)";
               }}
             >
-              Start Your Journey
+              Get Dean of Zen
             </Link>
             <Link
               href="/about"
@@ -211,6 +212,15 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ElevenLabs Widget Section */}
+      <div
+        style={{ display: "flex", justifyContent: "center", margin: "2rem 0" }}
+      >
+        <div style={{ maxWidth: 480, width: "100%" }}>
+          <ElevenLabsConvaiWidget />
+        </div>
+      </div>
 
       {/* AI Features Section */}
       <section className="ai-features" id="features">
@@ -374,68 +384,42 @@ export default function Home() {
             </p>
           </div>
           <div className="pricing-grid">
-            {/* Discovery Session Card */}
+            {/* Dean of Zen Card */}
             <div
               className="pricing-card"
               data-animate="fade-in"
               data-aos-delay="100"
             >
               <div className="pricing-header">
-                <h3>Discovery Session</h3>
+                <h3>Dean of Zen</h3>
                 <div className="pricing-price">
                   <span className="currency">$</span>
-                  <span className="amount">150</span>
+                  <span className="amount">50</span>
                 </div>
-                <p className="pricing-period">30-minute session</p>
+                <p className="pricing-period">per month</p>
               </div>
               <div className="pricing-description">
                 <p>
-                  Perfect for exploring our AI-enhanced approach and getting
-                  clarity on your mental fitness journey.
+                  Affordable monthly access to focused, practical support for
+                  stress reduction and mental fitness.
                 </p>
               </div>
               <ul className="pricing-features">
-                <li>Initial brain fitness assessment</li>
-                <li>Personalized goal setting</li>
-                <li>AI-powered insights</li>
-                <li>Custom action plan</li>
-                <li>Resource recommendations</li>
-                <li>Follow-up summary</li>
+                <li>Quick solution focused-supports</li>
+                <li>Techniques for reducing stress</li>
+                <li>Breathing techniques</li>
+                <li>Pre-coaching assessment</li>
               </ul>
-              <Link href="/contact?plan=discovery" className="pricing-cta">
-                Book Discovery
-              </Link>
-            </div>
-            {/* Power Session Card */}
-            <div
-              className="pricing-card"
-              data-animate="fade-in"
-              data-aos-delay="200"
-            >
-              <div className="pricing-header">
-                <h3>Power Session</h3>
-                <div className="pricing-price">
-                  <span className="currency">$</span>
-                  <span className="amount">200</span>
-                </div>
-                <p className="pricing-period">60-minute session</p>
-              </div>
-              <div className="pricing-description">
-                <p>
-                  An intensive deep-dive session designed for significant
-                  breakthrough and skill-building.
-                </p>
-              </div>
-              <ul className="pricing-features">
-                <li>Deep-dive coaching session</li>
-                <li>Advanced brain fitness techniques</li>
-                <li>Real-time AI analysis</li>
-                <li>Homework assignments</li>
-                <li>Progress tracking tools</li>
-                <li>Follow-up resources</li>
-              </ul>
-              <Link href="/contact?plan=power" className="pricing-cta">
-                Book Power Session
+              <Link
+                href="/dean-of-zen"
+                className="pricing-cta primary"
+                style={{
+                  width: "100%",
+                  display: "inline-block",
+                  textAlign: "center",
+                }}
+              >
+                Get Dean of Zen
               </Link>
             </div>
             {/* Transformation Program Card */}
