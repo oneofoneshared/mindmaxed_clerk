@@ -51,8 +51,26 @@ export default function ContactPage() {
     initialValues,
     validate,
     onSubmit: async (vals) => {
-      await new Promise((res) => setTimeout(res, 1200));
-      toast.success("Message sent!");
+      const payload = {
+        name: vals.firstName + " " + vals.lastName,
+        email: vals.email,
+        message: vals.challenges || vals.goals || "",
+      };
+      try {
+        const res = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json();
+        if (data.success) {
+          toast.success("Message sent!");
+        } else {
+          toast.error("Failed to send message. Please try again.");
+        }
+      } catch (err) {
+        toast.error("Failed to send message. Please try again.");
+      }
     },
   });
 

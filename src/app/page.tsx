@@ -1,5 +1,6 @@
 "use client";
 
+import { PricingTable } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -121,6 +122,23 @@ export default function Home() {
   useEffect(() => {
     setDirection(1); // Always forward for auto-play; can be enhanced for manual navigation
   }, [currentIndex]);
+
+  // Scroll Up Button logic
+  const [showScrollUp, setShowScrollUp] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Show button if scrolled more than 1 viewport height
+      setShowScrollUp(window.scrollY > window.innerHeight * 0.8);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const handleScrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <main>
       {/* Navigation removed: now handled by layout/Navbar */}
@@ -210,8 +228,30 @@ export default function Home() {
               <div className="stat-label">Success Rate</div>
             </div>
           </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              margin: "3rem 0",
+            }}
+          >
+            <Image
+              src="/Dean_of_ZenAI_workflow.png"
+              alt="Dean of Zen AI Workflow"
+              width={1200}
+              height={600}
+              style={{
+                maxWidth: "70%",
+                height: "auto",
+                borderRadius: "1.25rem",
+                boxShadow: "0 4px 24px rgba(99,102,241,0.10)",
+              }}
+              priority
+            />
+          </div>
         </div>
       </section>
+      {/* Dean of Zen AI Workflow Image */}
 
       {/* ElevenLabs Widget Section */}
       <div
@@ -236,15 +276,23 @@ export default function Home() {
           </div>
           <div className="features-grid">
             <div className="feature-card">
-              <div className="feature-icon">
+              <div
+                className="feature-image-fade"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
                 <Image
-                  src="/assets/images/icons/brain_icon.svg"
+                  src="/brain_fitness.png"
                   alt="Brain Fitness"
-                  width={48}
-                  height={48}
+                  width={150}
+                  height={150}
+                  style={{ display: "block" }}
                 />
               </div>
-              <h3>Brain Fitness Training</h3>
+              <h3 style={{ marginTop: "1.5rem" }}>Brain Fitness Training</h3>
               <p>
                 Science-backed methods to retrain your mind for resilience,
                 clarity, and peak performance in all areas of life.
@@ -256,15 +304,23 @@ export default function Home() {
               </ul>
             </div>
             <div className="feature-card">
-              <div className="feature-icon">
+              <div
+                className="feature-image-fade"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
                 <Image
-                  src="/assets/images/icons/ai_icon.svg"
+                  src="/ai_enhanced.png"
                   alt="AI Enhancement"
-                  width={48}
-                  height={48}
+                  width={150}
+                  height={150}
+                  style={{ display: "block" }}
                 />
               </div>
-              <h3>AI-Enhanced Sessions</h3>
+              <h3 style={{ marginTop: "1.5rem" }}>AI-Enhanced Sessions</h3>
               <p>
                 Personalized coaching powered by AI insights, tracking your
                 progress and optimizing your mental fitness journey.
@@ -276,15 +332,23 @@ export default function Home() {
               </ul>
             </div>
             <div className="feature-card">
-              <div className="feature-icon">
+              <div
+                className="feature-image-fade"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
                 <Image
-                  src="/assets/images/icons/growth_icon.svg"
+                  src="/sustainable_growth.png"
                   alt="Sustainable Growth"
-                  width={48}
-                  height={48}
+                  width={150}
+                  height={150}
+                  style={{ display: "block" }}
                 />
               </div>
-              <h3>Sustainable Growth</h3>
+              <h3 style={{ marginTop: "1.5rem" }}>Sustainable Growth</h3>
               <p>
                 Build lasting mental habits that help you thrive professionally,
                 personally, and emotionally for years to come.
@@ -370,6 +434,57 @@ export default function Home() {
               </div>
             </div>
           </div>
+
+          {/* Video Section */}
+          <div
+            className="video-section"
+            style={{ marginTop: "4rem", textAlign: "center" }}
+          >
+            <h3
+              style={{
+                fontSize: "1.5rem",
+                fontWeight: "600",
+                color: "#8b5cf6",
+                marginBottom: "1.5rem",
+                textAlign: "center",
+              }}
+            >
+              The Importance of Brain Fitness
+            </h3>
+            <div
+              style={{
+                maxWidth: "800px",
+                margin: "0 auto",
+                borderRadius: "12px",
+                overflow: "hidden",
+                boxShadow:
+                  "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+                background: "rgba(255, 255, 255, 0.05)",
+                border: "1px solid rgba(255, 255, 255, 0.1)",
+              }}
+            >
+              <video
+                controls
+                preload="metadata"
+                crossOrigin="anonymous"
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  display: "block",
+                }}
+              >
+                <source
+                  src="https://fdzkwopw15m9bnnq.public.blob.vercel-storage.com/Video_1.mov"
+                  type="video/quicktime"
+                />
+                <source
+                  src="https://fdzkwopw15m9bnnq.public.blob.vercel-storage.com/Video_1.mov"
+                  type="video/mp4"
+                />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -383,84 +498,56 @@ export default function Home() {
               level.
             </p>
           </div>
-          <div className="pricing-grid">
-            {/* Dean of Zen Card */}
-            <div
-              className="pricing-card"
-              data-animate="fade-in"
-              data-aos-delay="100"
-            >
-              <div className="pricing-header">
-                <h3>Dean of Zen</h3>
-                <div className="pricing-price">
-                  <span className="currency">$</span>
-                  <span className="amount">50</span>
-                </div>
-                <p className="pricing-period">per month</p>
-              </div>
-              <div className="pricing-description">
-                <p>
-                  Affordable monthly access to focused, practical support for
-                  stress reduction and mental fitness.
-                </p>
-              </div>
-              <ul className="pricing-features">
-                <li>Quick solution focused-supports</li>
-                <li>Techniques for reducing stress</li>
-                <li>Breathing techniques</li>
-                <li>Pre-coaching assessment</li>
-              </ul>
-              <Link
-                href="/dean-of-zen"
-                className="pricing-cta primary"
-                style={{
-                  width: "100%",
-                  display: "inline-block",
-                  textAlign: "center",
-                }}
-              >
-                Get Dean of Zen
-              </Link>
-            </div>
-            {/* Transformation Program Card */}
-            <div
-              className="pricing-card featured"
-              data-animate="fade-in"
-              data-aos-delay="300"
-            >
-              <div className="pricing-badge">Most Popular</div>
-              <div className="pricing-header">
-                <h3>Transformation Program</h3>
-                <div className="pricing-price">
-                  <span className="currency">$</span>
-                  <span className="amount">750</span>
-                </div>
-                <p className="pricing-period">per month</p>
-              </div>
-              <div className="pricing-description">
-                <p>
-                  Our flagship program for comprehensive, ongoing transformation
-                  with AI-powered insights.
-                </p>
-              </div>
-              <ul className="pricing-features">
-                <li>Weekly 1-hour coaching sessions</li>
-                <li>24/7 AI coaching support</li>
-                <li>Personalized brain fitness plan</li>
-                <li>Progress analytics dashboard</li>
-                <li>Emergency support access</li>
-                <li>Monthly goal reviews</li>
-                <li>Community access</li>
-                <li>Resource library</li>
-              </ul>
-              <Link
-                href="/contact?plan=transformation"
-                className="pricing-cta primary"
-              >
-                Start Transformation
-              </Link>
-            </div>
-          </div>
+          <PricingTable
+            appearance={{
+              elements: {
+                pricingTable: {
+                  display: "flex",
+                },
+                pricingTableButton: {
+                  background: "linear-gradient(45deg, #6366f1, #8b5cf6)",
+                  color: "#fff",
+                  border: "none",
+                },
+                formButtonPrimary: {
+                  background: "linear-gradient(45deg, #6366f1, #8b5cf6)",
+                  color: "#fff",
+                  border: "none",
+                },
+                button: {
+                  background: "linear-gradient(45deg, #6366f1, #8b5cf6)",
+                  color: "#fff",
+                  border: "none",
+                },
+                pricingTableCard: {
+                  background: "rgba(255, 255, 255, 0.05)",
+                  borderRadius: "1.25rem",
+                  border: "2px solid rgba(99, 102, 241, 0.3)",
+                  minWidth: "400px",
+                },
+
+                pricingTableCardTitle: {
+                  color: "#8b5cf6",
+                },
+                pricingTableCardFeatures: {
+                  background: "#242230",
+                },
+
+                pricingTableCardFeaturesListItemTitle: {
+                  color: "#8b5cf6",
+                },
+                pricingTableCardFee: {
+                  color: "#8b5cf6",
+                },
+                pricingTableCardDescription: {
+                  color: "#9ca3af",
+                },
+                pricingTableCardFeePeriod: {
+                  color: "#9ca3af",
+                },
+              },
+            }}
+          />
         </div>
       </section>
 
@@ -473,7 +560,18 @@ export default function Home() {
               Real transformations from real people who chose to thrive.
             </p>
           </div>
-          <div className="testimonials-grid grid md:grid-cols-2 ">
+          <div
+            className="testimonials-grid md:grid md:grid-cols-2"
+            data-testid="testimonials-grid-wrapper"
+            style={{
+              width: "100%",
+              minWidth: 0,
+              boxSizing: "border-box",
+              display: "flex",
+              flexDirection: "column",
+              gap: "2rem",
+            }}
+          >
             {/* Featured Testimonial */}
             <div className="testimonial-card featured" data-aos="fade-up">
               <div className="testimonial-content mb-4">
@@ -551,6 +649,47 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Scroll Up Button */}
+      <div
+        style={{
+          position: "fixed",
+          left: 0,
+          right: 0,
+          bottom: "2rem",
+          display: "flex",
+          justifyContent: "center",
+          pointerEvents: "none",
+          zIndex: 1000,
+        }}
+      >
+        <button
+          onClick={handleScrollToTop}
+          aria-label="Scroll to top"
+          style={{
+            opacity: showScrollUp ? 1 : 0,
+            transform: showScrollUp ? "translateY(0)" : "translateY(20px)",
+            transition: "opacity 0.4s, transform 0.4s",
+            background: "#6366f1",
+            color: "#fff",
+            border: "none",
+            borderRadius: "50%",
+            width: "2.2rem",
+            height: "2.2rem",
+            boxShadow: "0 2px 12px rgba(99,102,241,0.18)",
+            cursor: showScrollUp ? "pointer" : "default",
+            fontSize: "1.3rem",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            pointerEvents: showScrollUp ? "auto" : "none",
+          }}
+          onMouseOver={(e) => (e.currentTarget.style.background = "#4f46e5")}
+          onMouseOut={(e) => (e.currentTarget.style.background = "#6366f1")}
+        >
+          ↑
+        </button>
+      </div>
     </main>
   );
 }
