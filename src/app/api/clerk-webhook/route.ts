@@ -3,26 +3,34 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Webhook } from 'svix';
 
 export async function POST(req: NextRequest) {
-  const payload = await req.text();
-  const headers = Object.fromEntries(req.headers.entries());
-
-  // Verify webhook signature
-  const wh = new Webhook(process.env.CLERK_WEBHOOK_SECRET || '');
-  let evt: Record<string, unknown>;
   try {
-    evt = wh.verify(payload, headers) as Record<string, unknown>;
-  } catch (err) {
-    return NextResponse.json({ error: 'Invalid signature' }, { status: 400 });
-  }
+    const payload = await req.text();
+    const headers = Object.fromEntries(req.headers.entries());
 
-  // Log the event for debugging
-  console.log('=== CLERK WEBHOOK EVENT RECEIVED ===');
-  console.log('Full event:', JSON.stringify(evt, null, 2));
-  console.log('Event type:', evt.type);
-  console.log('Event data keys:', Object.keys(evt.data as Record<string, unknown> || {}));
+    // Check if webhook secret is configured
+    const webhookSecret = process.env.CLERK_WEBHOOK_SECRET;
+    if (!webhookSecret) {
+      console.error('CLERK_WEBHOOK_SECRET is not configured');
+      return NextResponse.json({ error: 'Webhook secret not configured' }, { status: 500 });
+    }
 
-  // Handle subscription events
-  try {
+    // Verify webhook signature
+    const wh = new Webhook(webhookSecret);
+    let evt: Record<string, unknown>;
+    try {
+      evt = wh.verify(payload, headers) as Record<string, unknown>;
+    } catch (err) {
+      console.error('Webhook signature verification failed:', err);
+      return NextResponse.json({ error: 'Invalid signature' }, { status: 400 });
+    }
+
+    // Log the event for debugging
+    console.log('=== CLERK WEBHOOK EVENT RECEIVED ===');
+    console.log('Full event:', JSON.stringify(evt, null, 2));
+    console.log('Event type:', evt.type);
+    console.log('Event data keys:', Object.keys(evt.data as Record<string, unknown> || {}));
+
+    // Handle subscription events
     const type = evt.type as string;
     const data = evt.data as Record<string, unknown>;
     
@@ -51,9 +59,13 @@ export async function POST(req: NextRequest) {
     console.log('Subscription status:', status);
     console.log('Subscription items:', items);
     
-    // Check if user has an active "Dean of Zen" subscription by plan ID
+    // Check if user has an active subscription to any plan
     let hasDeanOfZenSubscription = false;
+    let hasAnySubscription = false;
+    
+    // Plan IDs - updated with actual plan IDs from Clerk
     const DEAN_OF_ZEN_PLAN_ID = 'cplan_3047ITeoyhYYLKXAwVEqUqQtp4l'; // Dean of Zen plan ID
+    const TRANSFORMATION_PLAN_ID = 'cplan_30KQ8467r7HUHn4oziKNBL0zkpm'; // Transformation Program plan ID
     
     if (items && Array.isArray(items)) {
       for (const item of items) {
@@ -64,13 +76,24 @@ export async function POST(req: NextRequest) {
         
         console.log('Checking item:', { planId, planSlug, itemStatus, plan });
         
-        if (planId === DEAN_OF_ZEN_PLAN_ID && itemStatus === 'active') {
-          hasDeanOfZenSubscription = true;
-          break;
+        // Check if this is an active subscription
+        if (itemStatus === 'active') {
+          hasAnySubscription = true;
+          
+          // Check if it's specifically the Dean of Zen plan
+          if (planId === DEAN_OF_ZEN_PLAN_ID) {
+            hasDeanOfZenSubscription = true;
+          }
+          
+          // Check if it's the Transformation Program plan (also gives access to Dean of Zen)
+          if (planId === TRANSFORMATION_PLAN_ID) {
+            hasDeanOfZenSubscription = true; // Transformation plan also gives access to Dean of Zen
+          }
         }
       }
     }
     
+    console.log('Has any subscription:', hasAnySubscription);
     console.log('Has Dean of Zen subscription:', hasDeanOfZenSubscription);
     
     if (
@@ -80,7 +103,7 @@ export async function POST(req: NextRequest) {
       console.log('Setting subscription metadata for user:', userId);
       await clerkClient.users.updateUser(userId, {
         publicMetadata: { 
-          isPaidSubscriber: hasDeanOfZenSubscription,
+          isPaidSubscriber: hasAnySubscription,
           hasDeanOfZenSubscription: hasDeanOfZenSubscription
         },
       });
@@ -97,10 +120,10 @@ export async function POST(req: NextRequest) {
       });
       console.log('Successfully updated user metadata');
     }
-  } catch (err) {
-    console.error('Failed to update user metadata:', err);
-    return NextResponse.json({ error: 'Failed to update user metadata' }, { status: 500 });
-  }
 
-  return NextResponse.json({ received: true });
+    return NextResponse.json({ received: true });
+  } catch (err) {
+    console.error('Webhook processing failed:', err);
+    return NextResponse.json({ error: 'Webhook processing failed' }, { status: 500 });
+  }
 } 

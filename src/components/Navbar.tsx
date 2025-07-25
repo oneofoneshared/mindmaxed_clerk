@@ -123,8 +123,8 @@ export default function Navbar() {
               (!isSignedIn ? (
                 <>
                   <SignUpButton
-                    mode="redirect"
-                    signInForceRedirectUrl="/dashboard"
+                  // mode="redirect"
+                  // signInForceRedirectUrl={pathname}
                   >
                     <button
                       className="cta-button primary"
@@ -150,7 +150,9 @@ export default function Navbar() {
                       Sign Up
                     </button>
                   </SignUpButton>
-                  <SignInButton mode="redirect" forceRedirectUrl="/dashboard">
+                  <SignInButton
+                  // mode="redirect" forceRedirectUrl={pathname}
+                  >
                     <button
                       className="secondary-button"
                       style={{
@@ -190,7 +192,7 @@ export default function Navbar() {
                     alignItems: "center",
                   }}
                 >
-                  <UserButton afterSignOutUrl="/" />
+                  <UserButton afterSignOutUrl={pathname} />
                 </div>
               ))}
             <button
@@ -292,7 +294,7 @@ export default function Navbar() {
                     </SignInButton>
                   </>
                 ) : (
-                  <UserButton afterSignOutUrl="/" />
+                  <UserButton afterSignOutUrl={pathname} />
                 )}
               </div>
             </div>
