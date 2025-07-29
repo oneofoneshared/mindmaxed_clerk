@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function AboutPage() {
   return (
     <div className="about-page">
@@ -29,6 +31,85 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      {/* Hero Cards Section */}
+      <section style={{ marginBottom: "4rem" }}>
+        <div className="container">
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              margin: "3rem 0",
+              gap: "2rem",
+              flexWrap: "wrap",
+            }}
+          >
+            <Image
+              src="/hero_1.png"
+              alt="Hero Step 1"
+              width={300}
+              height={0}
+              style={{
+                width: "300px",
+                height: "auto",
+                borderRadius: "1.25rem",
+                boxShadow: "0 4px 24px rgba(99,102,241,0.10)",
+              }}
+              priority
+            />
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                fontSize: "2rem",
+                color: "#6366f1",
+                fontWeight: "bold",
+              }}
+            >
+              →
+            </div>
+            <Image
+              src="/hero_2.png"
+              alt="Hero Step 2"
+              width={300}
+              height={0}
+              style={{
+                width: "300px",
+                height: "auto",
+                borderRadius: "1.25rem",
+                boxShadow: "0 4px 24px rgba(99,102,241,0.10)",
+              }}
+              priority
+            />
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                fontSize: "2rem",
+                color: "#6366f1",
+                fontWeight: "bold",
+              }}
+            >
+              →
+            </div>
+            <Image
+              src="/hero_3.png"
+              alt="Hero Step 3"
+              width={300}
+              height={0}
+              style={{
+                width: "300px",
+                height: "auto",
+                borderRadius: "1.25rem",
+                boxShadow: "0 4px 24px rgba(99,102,241,0.10)",
+              }}
+              priority
+            />
+          </div>
+        </div>
+      </section>
+
       {/* Mission Section */}
       <section className="mission-section" style={{ marginBottom: "4rem" }}>
         <div className="container">

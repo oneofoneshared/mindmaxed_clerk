@@ -4,7 +4,6 @@ import { PricingTable } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import ElevenLabsConvaiWidget from "../components/ElevenLabsConvaiWidget";
 
 // Custom hook for pricing card interactivity
 function usePricingCards() {
@@ -144,6 +143,15 @@ export default function Home() {
       {/* Navigation removed: now handled by layout/Navbar */}
 
       {/* Hero Section */}
+      <div className="elevenlabs-widget-container">
+        <elevenlabs-convai agent-id="agent_01jyejgskkf9as5h6fr0pxstz7"></elevenlabs-convai>
+        <script
+          src="https://unpkg.com/@elevenlabs/convai-widget-embed"
+          async
+          type="text/javascript"
+        ></script>
+      </div>
+
       <section className="hero" id="hero">
         <div className="hero-background">
           <div className="grid-pattern"></div>
@@ -232,16 +240,67 @@ export default function Home() {
             style={{
               display: "flex",
               justifyContent: "center",
+              alignItems: "center",
               margin: "3rem 0",
+              gap: "2rem",
+              flexWrap: "wrap",
             }}
           >
             <Image
-              src="/Dean_of_ZenAI_workflow.png"
-              alt="Dean of Zen AI Workflow"
-              width={1200}
-              height={600}
+              src="/hero_1.png"
+              alt="Hero Step 1"
+              width={300}
+              height={0}
               style={{
-                maxWidth: "70%",
+                width: "300px",
+                height: "auto",
+                borderRadius: "1.25rem",
+                boxShadow: "0 4px 24px rgba(99,102,241,0.10)",
+              }}
+              priority
+            />
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                fontSize: "2rem",
+                color: "#6366f1",
+                fontWeight: "bold",
+              }}
+            >
+              →
+            </div>
+            <Image
+              src="/hero_2.png"
+              alt="Hero Step 2"
+              width={300}
+              height={0}
+              style={{
+                width: "300px",
+                height: "auto",
+                borderRadius: "1.25rem",
+                boxShadow: "0 4px 24px rgba(99,102,241,0.10)",
+              }}
+              priority
+            />
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                fontSize: "2rem",
+                color: "#6366f1",
+                fontWeight: "bold",
+              }}
+            >
+              →
+            </div>
+            <Image
+              src="/hero_3.png"
+              alt="Hero Step 3"
+              width={300}
+              height={0}
+              style={{
+                width: "300px",
                 height: "auto",
                 borderRadius: "1.25rem",
                 boxShadow: "0 4px 24px rgba(99,102,241,0.10)",
@@ -257,9 +316,7 @@ export default function Home() {
       <div
         style={{ display: "flex", justifyContent: "center", margin: "2rem 0" }}
       >
-        <div style={{ maxWidth: 480, width: "100%" }}>
-          <ElevenLabsConvaiWidget />
-        </div>
+        <div style={{ maxWidth: 480, width: "100%" }}></div>
       </div>
 
       {/* AI Features Section */}
@@ -561,22 +618,14 @@ export default function Home() {
             </p>
           </div>
           <div
-            className="testimonials-grid md:grid md:grid-cols-2"
+            className="testimonials-grid"
             data-testid="testimonials-grid-wrapper"
-            style={{
-              width: "100%",
-              minWidth: 0,
-              boxSizing: "border-box",
-              display: "flex",
-              flexDirection: "column",
-              gap: "2rem",
-            }}
           >
             {/* Featured Testimonial */}
             <div className="testimonial-card featured" data-aos="fade-up">
-              <div className="testimonial-content mb-4">
-                <div className="stars text-yellow-400 text-xl mb-2">★★★★★</div>
-                <p className="testimonial-text text-gray-700 mb-4">
+              <div className="testimonial-content">
+                <div className="stars">★★★★★</div>
+                <p className="testimonial-text">
                   &quot;As a medical doctor, I&apos;ve been familiar with
                   traditional mental health approaches, but Dustin Dean&apos;s
                   brain-fitness approach is truly unique. He provided constant
@@ -587,15 +636,13 @@ export default function Home() {
                   mental wellness results.&quot;
                 </p>
                 <div className="testimonial-author">
-                  <div className="author-name font-semibold">Dr. Sarah M.</div>
-                  <div className="author-title text-gray-500">
-                    Medical Doctor
-                  </div>
+                  <div className="author-name">Dr. Sarah M.</div>
+                  <div className="author-title">Medical Doctor</div>
                 </div>
               </div>
             </div>
             {/* Testimonials Carousel (Mini Testimonials) */}
-            <div>
+            <div className="testimonials-carousel-container">
               <div className="testimonials-carousel">
                 {testimonials.map((t, idx) => (
                   <div key={idx} className="testimonial-mini active">
@@ -611,37 +658,26 @@ export default function Home() {
 
       {/* Final CTA Section */}
       <section className="final-cta" id="contact">
-        <div className="container ">
+        <div className="container">
           <div className="cta-content" data-aos="fade-up">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Ready to Transform Your Mind?
-            </h2>
-            <p className="">
+            <h2 className="cta-title">Ready to Transform Your Mind?</h2>
+            <p className="cta-subtitle">
               Join 1,200+ high-achievers who&apos;ve chosen to thrive rather
               than just survive. <br />
               Your journey to mental fitness starts with a single step.
             </p>
-            <div className="cta-actions flex flex-col md:flex-row gap-4 justify-center mb-4">
-              <Link
-                href="/contact"
-                className="cta-button primary bg-blue-600 text-white px-8 py-3 rounded text-lg font-semibold hover:bg-blue-700 transition large"
-              >
+            <div className="cta-actions">
+              <Link href="/contact" className="cta-button primary large">
                 Schedule Your Session Today
               </Link>
-              <Link
-                href="/about"
-                className="secondary-button large bg-white text-blue-600 border border-blue-600 px-8 py-3 rounded text-lg font-semibold hover:bg-blue-50 transition"
-              >
+              <Link href="/about" className="secondary-button large">
                 Learn More About Us
               </Link>
             </div>
-            <div className="contact-info text-gray-600 mt-4">
+            <div className="contact-info">
               <p>
                 Questions? Email us at{" "}
-                <a
-                  href="mailto:hello@mindmaxed.com"
-                  className="text-blue-600 underline"
-                >
+                <a href="mailto:hello@mindmaxed.com" className="contact-link">
                   hello@mindmaxed.com
                 </a>
               </p>

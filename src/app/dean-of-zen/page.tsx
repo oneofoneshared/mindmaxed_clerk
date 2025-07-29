@@ -1,13 +1,33 @@
 "use client";
 
-import { PricingTable, useClerk, useUser } from "@clerk/nextjs";
+import { PricingTable, useAuth, useClerk, useUser } from "@clerk/nextjs";
+import { useEffect, useState } from "react";
 import ElevenLabsConvaiWidget from "../../components/ElevenLabsConvaiWidget";
-import { useSubscriptionStatus } from "../../hooks/useSubscriptionStatus";
 
 export default function DeanOfZenPage() {
-  const { isSignedIn } = useUser();
+  const { isSignedIn, user } = useUser();
   const { openUserProfile } = useClerk();
-  const { hasAccess, isLoading } = useSubscriptionStatus();
+  const { has } = useAuth();
+  const [hasAccess, setHasAccess] = useState(false);
+
+  // Check subscription status with proper updates
+  useEffect(() => {
+    if (isSignedIn && has) {
+      const checkSubscription = async () => {
+        const hasZenAccess = has({ plan: "zenai_coaching" });
+        const hasTransformationAccess = has({ plan: "transformation_program" });
+        setHasAccess(hasZenAccess || hasTransformationAccess);
+      };
+
+      checkSubscription();
+
+      // Set up polling to check for subscription changes
+      const interval = setInterval(checkSubscription, 2000);
+      return () => clearInterval(interval);
+    } else {
+      setHasAccess(false);
+    }
+  }, [isSignedIn, has]);
 
   const handleSubscribe = () => {
     // @ts-expect-error Clerk billing path is supported but not in types
@@ -40,8 +60,8 @@ export default function DeanOfZenPage() {
         </p>
       </div>
 
-      {/* Widget positioned 200px below title - only for subscribed users */}
-      {isSignedIn && !isLoading && hasAccess && (
+      {/* Widget - only for subscribed users */}
+      {isSignedIn && hasAccess && (
         <div
           style={{
             width: "100%",
@@ -67,7 +87,7 @@ export default function DeanOfZenPage() {
         </div>
       )}
 
-      {/* Message for non-subscribers
+      {/* Message for signed-in users without subscription */}
       {isSignedIn && !hasAccess && (
         <div
           style={{
@@ -92,37 +112,10 @@ export default function DeanOfZenPage() {
             </p>
           </div>
         </div>
-      )} */}
+      )}
 
-      {/* Message for non-signed in users */}
-      {/* {!isSignedIn && (
-        <div
-          style={{
-            flex: "1",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "100%",
-            maxWidth: "600px",
-            margin: "2rem auto",
-            textAlign: "center",
-          }}
-        >
-          <div>
-            <h3 style={{ color: "#8b5cf6", marginBottom: "1rem" }}>
-              Sign In to Access Dean of Zen
-            </h3>
-            <p style={{ color: "#9ca3af", lineHeight: "1.6" }}>
-              Please sign in to access your AI-powered mindfulness and brain
-              fitness coach. If you don&apos;t have an account, you can sign up
-              below.
-            </p>
-          </div>
-        </div>
-      )} */}
-
-      {/* Pricing table at the bottom for non-subscribers */}
-      {!isLoading && !hasAccess && (
+      {/* Pricing table for non-subscribers */}
+      {!hasAccess && (
         <div style={{ margin: "2rem auto", width: "100%", maxWidth: "800px" }}>
           <PricingTable
             appearance={{
@@ -151,14 +144,12 @@ export default function DeanOfZenPage() {
                   border: "2px solid rgba(99, 102, 241, 0.3)",
                   minWidth: "400px",
                 },
-
                 pricingTableCardTitle: {
                   color: "#8b5cf6",
                 },
                 pricingTableCardFeatures: {
                   background: "#242230",
                 },
-
                 pricingTableCardFeaturesListItemTitle: {
                   color: "#8b5cf6",
                 },

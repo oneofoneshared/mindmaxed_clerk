@@ -64,8 +64,8 @@ export async function POST(req: NextRequest) {
     let hasAnySubscription = false;
     
     // Plan IDs - updated with actual plan IDs from Clerk
-    const DEAN_OF_ZEN_PLAN_ID = 'cplan_3047ITeoyhYYLKXAwVEqUqQtp4l'; // Dean of Zen plan ID
-    const TRANSFORMATION_PLAN_ID = 'cplan_30KQ8467r7HUHn4oziKNBL0zkpm'; // Transformation Program plan ID
+    const DEAN_OF_ZEN_PLAN_ID = 'cplan_30Pv2Ew8WCAQFgxffMSbMDa2t1W'; // Dean of Zen plan ID
+    const TRANSFORMATION_PLAN_ID = 'cplan_30UHQ72EwCQb05SA1DTtjPq4aaP'; // Transformation Program plan ID
     
     if (items && Array.isArray(items)) {
       for (const item of items) {

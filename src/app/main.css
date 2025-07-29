@@ -141,6 +141,34 @@ a:hover {
     padding: 0 var(--spacing-xl);
 }
 
+/* Mobile container adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 var(--spacing-md);
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    /* Ensure no horizontal overflow on mobile */
+    body {
+        overflow-x: hidden;
+        width: 100%;
+    }
+    
+    main {
+        width: 100%;
+        max-width: 100vw;
+        overflow-x: hidden;
+    }
+    
+    /* Fix any potential margin issues */
+    section {
+        width: 100%;
+        max-width: 100%;
+        overflow: hidden;
+    }
+}
+
 .section-header {
     text-align: center;
     margin-bottom: var(--spacing-4xl);
@@ -777,10 +805,20 @@ a:hover {
 }
 
 .testimonials-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
+    display: flex;
+    flex-direction: column;
     gap: var(--spacing-3xl);
-    align-items: start;
+    align-items: stretch;
+}
+
+/* Desktop grid layout */
+@media (min-width: 768px) {
+    .testimonials-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: var(--spacing-3xl);
+        align-items: start;
+    }
 }
 
 .testimonial-card {
@@ -835,6 +873,48 @@ a:hover {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-lg);
+}
+
+/* Desktop horizontal layout */
+@media (min-width: 768px) {
+  .testimonials-carousel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+  }
+}
+
+/* Mobile vertical stacking */
+@media (max-width: 767px) {
+  .testimonials-carousel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+  }
+  
+  .testimonial-mini {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    padding: var(--spacing-lg) !important;
+    margin-bottom: var(--spacing-md) !important;
+  }
+  
+  /* Completely hide carousel on mobile */
+  .testimonials-carousel-container {
+    display: none !important;
+  }
+  
+  /* Override responsive.css overflow-x: auto */
+  .testimonials-carousel {
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+  }
 }
 
 .testimonial-mini {
@@ -1663,11 +1743,52 @@ a:hover {
     gap: var(--spacing-2xl) !important;
     width: 100% !important;
     box-sizing: border-box;
+    max-width: 100% !important;
+    overflow: hidden !important;
   }
   .testimonial-card {
     width: 100% !important;
     min-width: 0 !important;
     box-sizing: border-box;
+    max-width: 100% !important;
+  }
+  
+  /* Ensure testimonials don't cause horizontal scroll */
+  .testimonials {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+  
+  .testimonials .container {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  
+  /* Additional carousel mobile fixes */
+  .testimonials-carousel-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+  
+  .testimonials-carousel {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+  
+  .testimonial-mini {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    padding: var(--spacing-lg) !important;
   }
 }
 
@@ -1717,4 +1838,102 @@ button[class*='cl-pricingTableButton'] {
   background: linear-gradient(45deg, #6366f1, #8b5cf6) !important;
   color: #fff !important;
   border: none !important;
+}
+
+/* Testimonials carousel container */
+.testimonials-carousel-container {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.testimonials-carousel {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.testimonial-mini {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* CTA section styling */
+.cta-title {
+  font-size: 2rem;
+  font-weight: var(--font-weight-bold);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.cta-subtitle {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--text-secondary);
+}
+
+.cta-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.contact-link {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+.contact-link:hover {
+  color: var(--secondary-color);
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .cta-title {
+    font-size: 1.5rem;
+  }
+  
+  .cta-actions {
+    flex-direction: column;
+  }
+}
+
+@media (min-width: 769px) {
+  .cta-actions {
+    flex-direction: row;
+  }
+}
+
+/* ElevenLabs widget container */
+.elevenlabs-widget-container {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.elevenlabs-widget-container elevenlabs-convai {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: block !important;
+}
+
+/* Mobile widget adjustments */
+@media (max-width: 768px) {
+    .elevenlabs-widget-container {
+        padding: 0 var(--spacing-md);
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .elevenlabs-widget-container elevenlabs-convai {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+    }
 }
