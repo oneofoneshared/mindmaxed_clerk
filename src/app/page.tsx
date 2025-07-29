@@ -144,12 +144,14 @@ export default function Home() {
 
       {/* Hero Section */}
       <div className="elevenlabs-widget-container">
-        <elevenlabs-convai agent-id="agent_01jyejgskkf9as5h6fr0pxstz7"></elevenlabs-convai>
-        <script
-          src="https://unpkg.com/@elevenlabs/convai-widget-embed"
-          async
-          type="text/javascript"
-        ></script>
+        <div
+          dangerouslySetInnerHTML={{
+            __html: `
+              <elevenlabs-convai agent-id="agent_01jyejgskkf9as5h6fr0pxstz7"></elevenlabs-convai>
+              <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+            `,
+          }}
+        />
       </div>
 
       <section className="hero" id="hero">
