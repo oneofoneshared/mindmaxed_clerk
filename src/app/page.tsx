@@ -1,9 +1,11 @@
 "use client";
 
 import { PricingTable } from "@clerk/nextjs";
+import { Brain, Coffee, Sparkles, Target, Zap } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import ElevenLabsHomepageWidget from "../components/ElevenLabsHomepageWidget";
 
 // Custom hook for pricing card interactivity
 function usePricingCards() {
@@ -62,29 +64,43 @@ function useTestimonialCarousel(length: number, autoPlayInterval = 4000) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const isHoveredRef = useRef(false);
-  const [direction, setDirection] = useState(1); // 1 for next, -1 for prev
 
   useEffect(() => {
     if (length <= 1) return;
     if (isHoveredRef.current) return;
-    timerRef.current = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % length);
-    }, autoPlayInterval);
+
+    const startTimer = () => {
+      timerRef.current = setInterval(() => {
+        setCurrentIndex((prev) => (prev + 1) % length);
+      }, autoPlayInterval);
+    };
+
+    startTimer();
+
     return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
     };
   }, [length, autoPlayInterval]);
 
-  const handleMouseEnter = () => {
+  const handleMouseEnter = useCallback(() => {
     isHoveredRef.current = true;
-    if (timerRef.current) clearInterval(timerRef.current);
-  };
-  const handleMouseLeave = () => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
     isHoveredRef.current = false;
-    timerRef.current = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % length);
-    }, autoPlayInterval);
-  };
+    if (!timerRef.current) {
+      timerRef.current = setInterval(() => {
+        setCurrentIndex((prev) => (prev + 1) % length);
+      }, autoPlayInterval);
+    }
+  }, [length, autoPlayInterval]);
 
   return { currentIndex, handleMouseEnter, handleMouseLeave };
 }
@@ -113,26 +129,39 @@ export default function Home() {
       author: "- Healthcare Professional",
     },
   ];
-  const [direction, setDirection] = useState(1); // 1 for next, -1 for prev
   const { currentIndex, handleMouseEnter, handleMouseLeave } =
     useTestimonialCarousel(testimonials.length);
 
-  // Update direction when carousel advances
-  useEffect(() => {
-    setDirection(1); // Always forward for auto-play; can be enhanced for manual navigation
-  }, [currentIndex]);
-
   // Scroll Up Button logic
   const [showScrollUp, setShowScrollUp] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [carouselIndex, setCarouselIndex] = useState(0);
+
+  // Auto-rotate carousel
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCarouselIndex((prev) => (prev + 1) % 5);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleScroll = useCallback(() => {
+    // Show button if scrolled more than 1 viewport height
+    setShowScrollUp(window.scrollY > window.innerHeight * 0.8);
+  }, []);
+
+  // Check if mobile on mount and resize
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
-      // Show button if scrolled more than 1 viewport height
-      setShowScrollUp(window.scrollY > window.innerHeight * 0.8);
-    };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [handleScroll]);
 
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -143,16 +172,7 @@ export default function Home() {
       {/* Navigation removed: now handled by layout/Navbar */}
 
       {/* Hero Section */}
-      <div className="elevenlabs-widget-container">
-        <div
-          dangerouslySetInnerHTML={{
-            __html: `
-              <elevenlabs-convai agent-id="agent_01jyejgskkf9as5h6fr0pxstz7"></elevenlabs-convai>
-              <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
-            `,
-          }}
-        />
-      </div>
+      <ElevenLabsHomepageWidget />
 
       <section className="hero" id="hero">
         <div className="hero-background">
@@ -161,11 +181,186 @@ export default function Home() {
         </div>
         <div className="container" style={{ position: "relative", zIndex: 2 }}>
           <h1 className="hero-title">AI-Powered Brain Fitness Coaching</h1>
-          <p className="hero-subtitle">
-            Transform your mind from surviving to thriving. Our AI-enhanced
-            coaching helps high-achievers process life through power &
-            potential, not pain & past.
-          </p>
+          <div
+            className="hero-subtitle"
+            style={{
+              marginTop: "5rem",
+              marginBottom: "2rem",
+              maxWidth: "800px",
+              marginLeft: "auto",
+              marginRight: "auto",
+            }}
+          >
+            <div
+              style={{
+                maxWidth: "800px",
+                margin: "0 auto",
+                position: "relative",
+                overflow: "hidden",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  transition: "transform 0.5s ease-in-out",
+                  transform: `translateX(-${carouselIndex * 100}%)`,
+                }}
+              >
+                <div
+                  style={{
+                    minWidth: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.75rem",
+                    padding: "1rem",
+                    background: "rgba(99, 102, 241, 0.03)",
+                    borderRadius: "8px",
+                  }}
+                >
+                  <Zap size={16} color="#6366f1" style={{ flexShrink: 0 }} />
+                  <div
+                    style={{
+                      fontSize: "1rem",
+                      color: "#6b7280",
+                      fontWeight: "500",
+                      lineHeight: "1.4",
+                    }}
+                  >
+                    Get real answers in 60 seconds—no waiting, no spiraling.
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    minWidth: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.75rem",
+                    padding: "1rem",
+                    background: "rgba(99, 102, 241, 0.03)",
+                    borderRadius: "8px",
+                  }}
+                >
+                  <Brain size={16} color="#6366f1" style={{ flexShrink: 0 }} />
+                  <div
+                    style={{
+                      fontSize: "1rem",
+                      color: "#6b7280",
+                      fontWeight: "500",
+                      lineHeight: "1.4",
+                    }}
+                  >
+                    Exclusive coaching powered by Dustin Dean&apos;s Brain
+                    Fitness system.
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    minWidth: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.75rem",
+                    padding: "1rem",
+                    background: "rgba(99, 102, 241, 0.03)",
+                    borderRadius: "8px",
+                  }}
+                >
+                  <Coffee size={16} color="#6366f1" style={{ flexShrink: 0 }} />
+                  <div
+                    style={{
+                      fontSize: "1rem",
+                      color: "#6b7280",
+                      fontWeight: "500",
+                      lineHeight: "1.4",
+                    }}
+                  >
+                    24/7 mental fitness for less than a daily coffee.
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    minWidth: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.75rem",
+                    padding: "1rem",
+                    background: "rgba(99, 102, 241, 0.03)",
+                    borderRadius: "8px",
+                  }}
+                >
+                  <Target size={16} color="#6366f1" style={{ flexShrink: 0 }} />
+                  <div
+                    style={{
+                      fontSize: "1rem",
+                      color: "#6b7280",
+                      fontWeight: "500",
+                      lineHeight: "1.4",
+                    }}
+                  >
+                    Shift from chaos to control—focus on what you can change.
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    minWidth: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.75rem",
+                    padding: "1rem",
+                    background: "rgba(99, 102, 241, 0.03)",
+                    borderRadius: "8px",
+                  }}
+                >
+                  <Sparkles
+                    size={16}
+                    color="#6366f1"
+                    style={{ flexShrink: 0 }}
+                  />
+                  <div
+                    style={{
+                      fontSize: "1rem",
+                      color: "#6b7280",
+                      fontWeight: "500",
+                      lineHeight: "1.4",
+                    }}
+                  >
+                    Turn stress into clarity, fast.
+                  </div>
+                </div>
+              </div>
+
+              {/* Navigation Dots */}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  gap: "0.5rem",
+                  marginTop: "1rem",
+                }}
+              >
+                {[0, 1, 2, 3, 4].map((index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCarouselIndex(index)}
+                    style={{
+                      width: "6px",
+                      height: "6px",
+                      borderRadius: "50%",
+                      border: "none",
+                      background:
+                        carouselIndex === index ? "#6366f1" : "#d1d5db",
+                      cursor: "pointer",
+                      transition: "background-color 0.3s ease",
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+
           <div
             className="hero-cta-group"
             style={{
@@ -313,13 +508,6 @@ export default function Home() {
         </div>
       </section>
       {/* Dean of Zen AI Workflow Image */}
-
-      {/* ElevenLabs Widget Section */}
-      <div
-        style={{ display: "flex", justifyContent: "center", margin: "2rem 0" }}
-      >
-        <div style={{ maxWidth: 480, width: "100%" }}></div>
-      </div>
 
       {/* AI Features Section */}
       <section className="ai-features" id="features">
@@ -584,7 +772,9 @@ export default function Home() {
                   border: "2px solid rgba(99, 102, 241, 0.3)",
                   minWidth: "400px",
                 },
-
+                pricingTableCardBody: {
+                  background: "rgba(255, 255, 255, 0.05)",
+                },
                 pricingTableCardTitle: {
                   color: "#8b5cf6",
                 },
@@ -694,7 +884,7 @@ export default function Home() {
           position: "fixed",
           left: 0,
           right: 0,
-          bottom: "2rem",
+          bottom: isMobile ? "calc(2rem + 125px)" : "2rem",
           display: "flex",
           justifyContent: "center",
           pointerEvents: "none",

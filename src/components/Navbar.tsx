@@ -2,7 +2,7 @@ import { SignInButton, SignUpButton, UserButton, useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { GiLotus } from "react-icons/gi";
 
 export default function Navbar() {
@@ -15,12 +15,16 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
+  const checkMobile = useCallback(
+    () => setIsMobile(window.innerWidth < 992),
+    []
+  );
+
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 992);
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
-  }, []);
+  }, [checkMobile]);
 
   // Tabs for signed-in and signed-out users
   const signedOutLinks = [

@@ -12,7 +12,7 @@ The widget is implemented using the official ElevenLabs Convai embed code:
 
 ```html
 <elevenlabs-convai
-  agent-id="agent_01k0fw476pff1a9eavgvxka1qb"
+  agent-id="agent_01jyejgskkf9as5h6fr0pxstz7"
 ></elevenlabs-convai>
 <script
   src="https://unpkg.com/@elevenlabs/convai-widget-embed"
@@ -23,7 +23,9 @@ The widget is implemented using the official ElevenLabs Convai embed code:
 
 ### Current Configuration
 
-- **Agent ID**: `agent_01k0fw476pff1a9eavgvxka1qb` (Dean of Zen agent)
+- **Agent ID**: `agent_01jyejgskkf9as5h6fr0pxstz7` (Dean of Zen agent) - from `NEXT_PUBLIC_ELEVENLABS_AGENT_ID`
+- **Voice ID**: `ZqiRAKPvzVxTc4ufnCeA` - from `NEXT_PUBLIC_ELEVENLABS_VOICE_ID`
+- **API Key**: Configured via `NEXT_PUBLIC_ELEVENLABS_API_KEY`
 - **Script Source**: `https://unpkg.com/@elevenlabs/convai-widget-embed`
 - **Position**: Default ElevenLabs widget position (typically bottom-right)
 - **Theme**: Default ElevenLabs styling
@@ -32,7 +34,7 @@ The widget is implemented using the official ElevenLabs Convai embed code:
 
 ### 1. Verify Agent Configuration
 
-The agent ID `agent_01k0fw476pff1a9eavgvxka1qb` should be configured in your ElevenLabs dashboard with:
+The agent ID `agent_01jyejgskkf9as5h6fr0pxstz7` should be configured in your ElevenLabs dashboard with:
 
 - **Name**: "Dean of Zen"
 - **Description**: "A wise AI coach specializing in mindfulness and personal development"
@@ -87,6 +89,6 @@ If you need to customize the widget appearance or behavior, you can modify the a
 ## Notes
 
 - The widget is automatically loaded when the Dean of Zen page is accessed
-- The agent ID is hardcoded for security and simplicity
-- No additional environment variables are required for this implementation
+- The agent ID and voice ID are configured via environment variables for flexibility
+- Environment variables are prefixed with `NEXT_PUBLIC_` for client-side access
 - The widget respects the user's subscription status (only visible to Dean of Zen subscribers)

@@ -7,6 +7,9 @@ export default function ElevenLabsConvaiWidget() {
     // Set up the iframe content when component mounts
     if (iframeRef.current) {
       const iframe = iframeRef.current;
+      const agentId =
+        process.env.NEXT_PUBLIC_ELEVENLABS_AGENT_ID ||
+        "agent_01jyejgskkf9as5h6fr0pxstz7";
 
       // Create the HTML content for the iframe
       const iframeContent = `
@@ -41,7 +44,7 @@ export default function ElevenLabsConvaiWidget() {
         </head>
         <body>
           <div id="widget-container">
-            <elevenlabs-convai agent-id="agent_01jyejgskkf9as5h6fr0pxstz7"></elevenlabs-convai>
+            <elevenlabs-convai agent-id="${agentId}"></elevenlabs-convai>
           </div>
           
           <script src="https://unpkg.com/@elevenlabs/convai-widget-embed"></script>

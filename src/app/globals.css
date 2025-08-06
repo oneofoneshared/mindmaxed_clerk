@@ -8,6 +8,18 @@
   flex-direction: row ;
   padding: 10px;
 }
+
+.cl-pricingTableCardBody div {
+
+  background-color: #242230;
+}
+
+.cl-pricingTableCardFeaturesListItem svg path {
+  width: 20px;
+  height: 10px;
+  color: gray;
+}
+
 @media (max-width: 1024px) {
     .cl-pricingTable{
     flex-direction: column ;

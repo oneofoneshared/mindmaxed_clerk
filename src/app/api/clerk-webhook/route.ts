@@ -5,14 +5,31 @@ import { Webhook } from 'svix';
 export async function POST(req: NextRequest) {
   try {
     const payload = await req.text();
-    const headers = Object.fromEntries(req.headers.entries());
-
+    
     // Check if webhook secret is configured
     const webhookSecret = process.env.CLERK_WEBHOOK_SECRET;
     if (!webhookSecret) {
       console.error('CLERK_WEBHOOK_SECRET is not configured');
       return NextResponse.json({ error: 'Webhook secret not configured' }, { status: 500 });
     }
+
+    // Extract signature headers
+    const svix_id = req.headers.get('svix-id');
+    const svix_timestamp = req.headers.get('svix-timestamp');
+    const svix_signature = req.headers.get('svix-signature');
+
+    // Check if all required headers are present
+    if (!svix_id || !svix_timestamp || !svix_signature) {
+      console.error('Missing required svix headers');
+      return NextResponse.json({ error: 'Missing required headers' }, { status: 400 });
+    }
+
+    // Create headers object for verification
+    const headers = {
+      'svix-id': svix_id,
+      'svix-timestamp': svix_timestamp,
+      'svix-signature': svix_signature,
+    };
 
     // Verify webhook signature
     const wh = new Webhook(webhookSecret);
