@@ -48,8 +48,7 @@ export function isElementInViewport(element: HTMLElement, offset = 0): boolean {
 export function animate(
   element: HTMLElement,
   properties: Record<string, number>,
-  duration = 300,
-  easing = 'ease'
+  duration = 300
 ): Promise<void> {
   return new Promise((resolve) => {
     const startTime = performance.now();

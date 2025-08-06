@@ -36,9 +36,15 @@ export default function ElevenLabsConversation({
     onMessage: (message) => {
       console.log("Received message:", message);
     },
-    onError: (error) => {
+    onError: (error: unknown) => {
       console.error("ElevenLabs conversation error:", error);
-      setError(error.message || "An error occurred");
+      setError(
+        typeof error === "string"
+          ? error
+          : error && typeof error === "object" && "message" in error
+          ? String(error.message)
+          : "An error occurred"
+      );
     },
     onDebug: (debug) => {
       console.log("Debug:", debug);
@@ -66,7 +72,13 @@ export default function ElevenLabsConversation({
       console.log("Microphone access granted");
 
       // Start the conversation session
-      const sessionOptions: any = {
+      const sessionOptions: {
+        agentId: string;
+        connectionType: "webrtc";
+        user_id?: string;
+        voice_id?: string;
+        apiKey?: string;
+      } = {
         agentId,
         connectionType: "webrtc",
       };

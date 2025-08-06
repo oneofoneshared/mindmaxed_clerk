@@ -7,9 +7,9 @@ import { GiLotus } from "react-icons/gi";
 
 export default function Navbar() {
   const pathname = usePathname();
-  const { isSignedIn, user } = useUser();
-  const hasDeanOfZenSubscription =
-    user?.publicMetadata?.hasDeanOfZenSubscription === true;
+  const { isSignedIn } = useUser();
+  // const hasDeanOfZenSubscription =
+  //   user?.publicMetadata?.hasDeanOfZenSubscription === true;
 
   // Mobile menu state
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

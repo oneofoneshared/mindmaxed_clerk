@@ -68,7 +68,7 @@ export default function ContactPage() {
         } else {
           toast.error("Failed to send message. Please try again.");
         }
-      } catch (err) {
+      } catch {
         toast.error("Failed to send message. Please try again.");
       }
     },

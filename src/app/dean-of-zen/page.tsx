@@ -1,13 +1,13 @@
 "use client";
 
-import { PricingTable, useAuth, useClerk, useUser } from "@clerk/nextjs";
+import { PricingTable, useAuth, useUser } from "@clerk/nextjs";
 import { Brain, Compass, Mic, Smartphone, TrendingUp } from "lucide-react";
 import { useEffect, useState } from "react";
 import ElevenLabsConversation from "../../components/ElevenLabsConversation";
 
 export default function DeanOfZenPage() {
   const { isSignedIn, user } = useUser();
-  const { openUserProfile } = useClerk();
+  // const { openUserProfile } = useClerk();
   const { has } = useAuth();
   const [hasAccess, setHasAccess] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -82,10 +82,10 @@ export default function DeanOfZenPage() {
     }
   }, [isSignedIn, has]);
 
-  const handleSubscribe = () => {
-    // @ts-expect-error Clerk billing path is supported but not in types
-    openUserProfile({ path: "billing" });
-  };
+  // const handleSubscribe = () => {
+  //   // @ts-expect-error Clerk billing path is supported but not in types
+  //   openUserProfile({ path: "billing" });
+  // };
 
   return (
     <div

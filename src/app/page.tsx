@@ -4,114 +4,118 @@ import { PricingTable } from "@clerk/nextjs";
 import { Brain, Coffee, Sparkles, Target, Zap } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ElevenLabsHomepageWidget from "../components/ElevenLabsHomepageWidget";
 
 // Custom hook for pricing card interactivity
 function usePricingCards() {
-  const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
-  const pricingRefs = useRef<Array<HTMLDivElement | null>>([]);
+  // const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+  // const pricingRefs = useRef<Array<HTMLDivElement | null>>([]);
 
   // Handle plan selection from URL
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const urlParams = new URLSearchParams(window.location.search);
-    const plan = urlParams.get("plan");
-    if (plan) {
-      setSelectedPlan(plan);
-      // Scroll to the selected plan
-      const planIndex = ["discovery", "power", "transformation"].indexOf(plan);
-      if (pricingRefs.current[planIndex]) {
-        pricingRefs.current[planIndex]?.scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-        });
-      }
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (typeof window === "undefined") return;
+  //   const urlParams = new URLSearchParams(window.location.search);
+  //   const plan = urlParams.get("plan");
+  //   if (plan) {
+  //     setSelectedPlan(plan);
+  //     // Scroll to the selected plan
+  //     const planIndex = ["discovery", "power", "transformation"].indexOf(plan);
+  //     if (pricingRefs.current[planIndex]) {
+  //       pricingRefs.current[planIndex]?.scrollIntoView({
+  //         behavior: "smooth",
+  //         block: "center",
+  //       });
+  //     }
+  //   }
+  // }, []);
 
   // Handle CTA click
-  const handleCTAClick = (plan: string, price: string) => {
-    setSelectedPlan(plan);
-    // Example: Track analytics event (replace with your tracking logic)
-    // trackEvent('pricing_cta_click', { plan, price });
-  };
+  // const handleCTAClick = (plan: string) => {
+  //   setSelectedPlan(plan);
+  //   // Example: Track analytics event (replace with your tracking logic)
+  //   // trackEvent('pricing_cta_click', { plan });
+  // };
 
   // Handle hover
-  const handleHover = (index: number) => {
-    if (pricingRefs.current[index]) {
-      pricingRefs.current[index]!.style.transform = "scale(1.05)";
-    }
-  };
-  const handleLeave = (index: number) => {
-    if (pricingRefs.current[index]) {
-      pricingRefs.current[index]!.style.transform = "scale(1)";
-    }
-  };
+  // const handleHover = (index: number) => {
+  //   if (pricingRefs.current[index]) {
+  //     pricingRefs.current[index]!.style.transform = "scale(1.05)";
+  //   }
+  // };
+  // const handleLeave = (index: number) => {
+  //   if (pricingRefs.current[index]) {
+  //     pricingRefs.current[index]!.style.transform = "scale(1)";
+  //   }
+  // };
 
   return {
-    selectedPlan,
-    setSelectedPlan,
-    pricingRefs,
-    handleCTAClick,
-    handleHover,
-    handleLeave,
+    // selectedPlan,
+    // setSelectedPlan,
+    // pricingRefs,
+    // handleCTAClick,
+    // handleHover,
+    // handleLeave,
   };
 }
 
 // Custom hook for testimonial carousel
-function useTestimonialCarousel(length: number, autoPlayInterval = 4000) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
-  const isHoveredRef = useRef(false);
+// function useTestimonialCarousel(length: number, autoPlayInterval = 4000) {
+//   const [currentIndex, setCurrentIndex] = useState(0);
+//   const timerRef = useRef<NodeJS.Timeout | null>(null);
+//   const isHoveredRef = useRef(false);
 
-  useEffect(() => {
-    if (length <= 1) return;
-    if (isHoveredRef.current) return;
+//   useEffect(() => {
+//     if (length <= 1) return;
+//     if (isHoveredRef.current) return;
 
-    const startTimer = () => {
-      timerRef.current = setInterval(() => {
-        setCurrentIndex((prev) => (prev + 1) % length);
-      }, autoPlayInterval);
-    };
+//     const startTimer = () => {
+//       timerRef.current = setInterval(() => {
+//         setCurrentIndex((prev) => (prev + 1) % length);
+//       }, autoPlayInterval);
+//     };
 
-    startTimer();
+//     startTimer();
 
-    return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-        timerRef.current = null;
-      }
-    };
-  }, [length, autoPlayInterval]);
+//     return () => {
+//       if (timerRef.current) {
+//         clearInterval(timerRef.current);
+//         timerRef.current = null;
+//       }
+//     };
+//   }, [length, autoPlayInterval]);
 
-  const handleMouseEnter = useCallback(() => {
-    isHoveredRef.current = true;
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-      timerRef.current = null;
-    }
-  }, []);
+//   const handleMouseEnter = useCallback(() => {
+//     isHoveredRef.current = true;
+//     if (timerRef.current) {
+//       clearInterval(timerRef.current);
+//       timerRef.current = null;
+//     }
+//   }, []);
 
-  const handleMouseLeave = useCallback(() => {
-    isHoveredRef.current = false;
-    if (!timerRef.current) {
-      timerRef.current = setInterval(() => {
-        setCurrentIndex((prev) => (prev + 1) % length);
-      }, autoPlayInterval);
-    }
-  }, [length, autoPlayInterval]);
+//   const handleMouseLeave = useCallback(() => {
+//     isHoveredRef.current = false;
+//     if (!timerRef.current) {
+//       timerRef.current = setInterval(() => {
+//         setCurrentIndex((prev) => (prev + 1) % length);
+//       }, autoPlayInterval);
+//     }
+//   }, [length, autoPlayInterval]);
 
-  return { currentIndex, handleMouseEnter, handleMouseLeave };
-}
+//   return {
+//     currentIndex,
+//     handleMouseEnter,
+//     handleMouseLeave
+//   };
+// }
 
 export default function Home() {
   const {
-    selectedPlan,
-    pricingRefs,
-    handleCTAClick,
-    handleHover,
-    handleLeave,
+    // selectedPlan,
+    // pricingRefs,
+    // handleCTAClick,
+    // handleHover,
+    // handleLeave,
   } = usePricingCards();
 
   // Testimonial carousel logic
@@ -129,8 +133,8 @@ export default function Home() {
       author: "- Healthcare Professional",
     },
   ];
-  const { currentIndex, handleMouseEnter, handleMouseLeave } =
-    useTestimonialCarousel(testimonials.length);
+  // const { currentIndex, handleMouseEnter, handleMouseLeave } =
+  //   useTestimonialCarousel(testimonials.length);
 
   // Scroll Up Button logic
   const [showScrollUp, setShowScrollUp] = useState(false);
