@@ -76,16 +76,6 @@ export default function DeanOfZenPage() {
     }
   };
 
-  // Get current cards to display
-  const getCurrentCards = () => {
-    if (currentPage === 0) {
-      return cards.slice(0, 3); // First three cards
-    } else {
-      return cards.slice(2, 5); // Last three cards (sharing the middle card)
-    }
-  };
-
-  // Get transform value for smooth sliding
   const getTransformValue = () => {
     if (currentPage === 0) {
       return "translateX(0)";

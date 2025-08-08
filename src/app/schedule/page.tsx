@@ -57,14 +57,16 @@ export default function SchedulePage() {
           </div>
           <p
             style={{
-              fontSize: "1.25rem",
               color: "#6b7280",
               lineHeight: "1.6",
-              margin: 0,
+              marginBottom: "2rem",
             }}
           >
-            Ready to transform your mind? Schedule your complimentary
-            exploratory session with Dustin.
+            Ready to take your mindset to the next level? Schedule a
+            personalized 1:1 coaching session with Dustin Dean, founder of
+            MindMaxED Institute. During this session, you&apos;ll receive
+            personalized guidance, actionable strategies, and a clear roadmap
+            for your mental fitness journey.
           </p>
         </div>
 
@@ -152,7 +154,7 @@ export default function SchedulePage() {
                 Discussion of your mental wellness goals
               </li>
               <li style={{ marginBottom: "0.5rem" }}>
-                Overview of MindMaxED's approach
+                Overview of MindMaxED&apos;s approach
               </li>
               <li>Next steps for your transformation journey</li>
             </ul>

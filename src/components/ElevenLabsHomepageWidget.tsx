@@ -7,33 +7,38 @@ export default function ElevenLabsHomepageWidget() {
   const scriptLoadedRef = useRef(false);
 
   useEffect(() => {
-    if (!containerRef.current || scriptLoadedRef.current) return;
+    if (containerRef.current && !scriptLoadedRef.current) {
+      const container = containerRef.current;
 
-    // Create the widget element
-    const widgetElement = document.createElement("elevenlabs-convai");
-    widgetElement.setAttribute("agent-id", "agent_01jyejgskkf9as5h6fr0pxstz7");
+      // Create the widget element
+      const widgetElement = document.createElement("elevenlabs-convai");
+      widgetElement.setAttribute(
+        "agent-id",
+        "agent_01jyejgskkf9as5h6fr0pxstz7"
+      );
 
-    // Clear container and append widget
-    containerRef.current.innerHTML = "";
-    containerRef.current.appendChild(widgetElement);
+      // Clear container and append widget
+      container.innerHTML = "";
+      container.appendChild(widgetElement);
 
-    // Load script only once
-    if (!document.querySelector('script[src*="convai-widget-embed"]')) {
-      const script = document.createElement("script");
-      script.src = "https://unpkg.com/@elevenlabs/convai-widget-embed";
-      script.async = true;
-      script.type = "text/javascript";
-      document.head.appendChild(script);
-    }
-
-    scriptLoadedRef.current = true;
-
-    // Cleanup function
-    return () => {
-      if (containerRef.current) {
-        containerRef.current.innerHTML = "";
+      // Load script only once
+      if (!document.querySelector('script[src*="convai-widget-embed"]')) {
+        const script = document.createElement("script");
+        script.src = "https://unpkg.com/@elevenlabs/convai-widget-embed";
+        script.async = true;
+        script.type = "text/javascript";
+        document.head.appendChild(script);
       }
-    };
+
+      scriptLoadedRef.current = true;
+
+      // Cleanup function
+      return () => {
+        if (container) {
+          container.innerHTML = "";
+        }
+      };
+    }
   }, []); // Empty dependency array ensures this runs only once
 
   return (
