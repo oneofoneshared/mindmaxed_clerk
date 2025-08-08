@@ -1,7 +1,15 @@
 "use client";
 
 import { PricingTable, useAuth, useUser } from "@clerk/nextjs";
-import { Brain, Compass, Mic, Smartphone, TrendingUp } from "lucide-react";
+import {
+  Brain,
+  ChevronLeft,
+  ChevronRight,
+  Compass,
+  Mic,
+  Smartphone,
+  TrendingUp,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 import ElevenLabsConversation from "../../components/ElevenLabsConversation";
 
@@ -11,7 +19,7 @@ export default function DeanOfZenPage() {
   const { has } = useAuth();
   const [hasAccess, setHasAccess] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [currentCardIndex, setCurrentCardIndex] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
 
   // Card data
   const cards = [
@@ -55,13 +63,36 @@ export default function DeanOfZenPage() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Auto-slide carousel every 5 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentCardIndex((prev) => (prev + 1) % cards.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [cards.length]);
+  // Navigation functions
+  const goToNextPage = () => {
+    if (currentPage < 1) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const goToPrevPage = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  // Get current cards to display
+  const getCurrentCards = () => {
+    if (currentPage === 0) {
+      return cards.slice(0, 3); // First three cards
+    } else {
+      return cards.slice(2, 5); // Last three cards (sharing the middle card)
+    }
+  };
+
+  // Get transform value for smooth sliding
+  const getTransformValue = () => {
+    if (currentPage === 0) {
+      return "translateX(0)";
+    } else {
+      return "translateX(-33.333%)"; // Slide left by one card width
+    }
+  };
 
   // Check subscription status with proper updates
   useEffect(() => {
@@ -105,7 +136,7 @@ export default function DeanOfZenPage() {
         style={{ marginTop: "1rem", marginBottom: "0rem", textAlign: "center" }}
       >
         <h1 className="section-title">Dean of Zen</h1>
-        {/* Card Carousel */}
+        {/* Manual Card Navigation */}
         <div
           style={{
             marginTop: "2rem",
@@ -114,96 +145,173 @@ export default function DeanOfZenPage() {
             marginLeft: "auto",
             marginRight: "auto",
             position: "relative",
-            overflow: "hidden",
             padding: isMobile ? "0 1rem" : "0 1rem",
           }}
         >
-          {/* Carousel Container */}
+          {/* Cards Container */}
           <div
             style={{
               display: "flex",
-              transition: "transform 0.5s ease-in-out",
-              transform: isMobile
-                ? `translateX(-${currentCardIndex * 100}%)`
-                : `translateX(-${currentCardIndex * (100 / 3)}%)`,
-              gap: isMobile ? "0" : "1.5rem",
-              width: isMobile ? "100%" : "auto",
+              gap: "1.5rem",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            {/* Duplicate cards for seamless loop */}
-            {[...cards, ...cards.slice(0, isMobile ? 1 : 3)].map(
-              (card, index) => {
-                const CardIcon = card.icon;
-                return (
-                  <div
-                    key={index}
-                    style={{
-                      minWidth: isMobile ? "100%" : "calc(33.333% - 1rem)",
-                      background:
-                        "linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%)",
-                      padding: isMobile ? "0.75rem" : "1rem",
-                      borderRadius: "12px",
-                      border: "1px solid rgba(99, 102, 241, 0.2)",
-                      transition: "all 0.3s ease",
-                      cursor: "pointer",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = "translateY(-2px)";
-                      e.currentTarget.style.boxShadow =
-                        "0 10px 20px rgba(99, 102, 241, 0.1)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = "translateY(0)";
-                      e.currentTarget.style.boxShadow = "none";
-                    }}
-                  >
+            {/* Left Arrow */}
+            {currentPage > 0 && (
+              <button
+                onClick={goToPrevPage}
+                style={{
+                  background: "rgba(99, 102, 241, 0.1)",
+                  border: "1px solid rgba(99, 102, 241, 0.2)",
+                  borderRadius: "50%",
+                  width: "40px",
+                  height: "40px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
+                  color: "#6366f1",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = "rgba(99, 102, 241, 0.2)";
+                  e.currentTarget.style.transform = "scale(1.05)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = "rgba(99, 102, 241, 0.1)";
+                  e.currentTarget.style.transform = "scale(1)";
+                }}
+              >
+                <ChevronLeft size={20} />
+              </button>
+            )}
+
+            {/* Cards with Smooth Sliding */}
+            <div
+              style={{
+                display: "flex",
+                gap: "1.5rem",
+                flex: 1,
+                justifyContent: "center",
+                overflow: "hidden",
+                position: "relative",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  gap: "1.5rem",
+                  transition: "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                  transform: getTransformValue(),
+                  width: "100%",
+                  willChange: "transform",
+                }}
+              >
+                {cards.map((card, index) => {
+                  const CardIcon = card.icon;
+                  return (
                     <div
+                      key={index}
                       style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.5rem",
-                        marginBottom: "0.75rem",
+                        flex: isMobile ? "1" : "0 0 auto",
+                        width: isMobile ? "100%" : "calc(33.333% - 1rem)",
+                        background:
+                          "linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%)",
+                        padding: isMobile ? "0.75rem" : "1rem",
+                        borderRadius: "12px",
+                        border: "1px solid rgba(99, 102, 241, 0.2)",
+                        transition: "all 0.3s ease",
+                        flexShrink: 0,
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = "translateY(-2px)";
+                        e.currentTarget.style.boxShadow =
+                          "0 10px 20px rgba(99, 102, 241, 0.1)";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = "translateY(0)";
+                        e.currentTarget.style.boxShadow = "none";
                       }}
                     >
                       <div
                         style={{
-                          fontSize: "1.25rem",
-                          color: "#8b5cf6",
-                          background: "rgba(139, 92, 246, 0.1)",
-                          padding: "0.375rem",
-                          borderRadius: "8px",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "0.5rem",
+                          marginBottom: "0.75rem",
                         }}
                       >
-                        <CardIcon size={16} />
+                        <div
+                          style={{
+                            fontSize: "1.25rem",
+                            color: "#8b5cf6",
+                            background: "rgba(139, 92, 246, 0.1)",
+                            padding: "0.375rem",
+                            borderRadius: "8px",
+                          }}
+                        >
+                          <CardIcon size={16} />
+                        </div>
+                        <h3
+                          style={{
+                            fontSize: isMobile ? "0.875rem" : "1rem",
+                            fontWeight: "600",
+                            color: "#8b5cf6",
+                            margin: 0,
+                          }}
+                        >
+                          {card.title}
+                        </h3>
                       </div>
-                      <h3
+                      <p
                         style={{
-                          fontSize: isMobile ? "0.875rem" : "1rem",
-                          fontWeight: "600",
-                          color: "#8b5cf6",
+                          color: "#9ca3af",
+                          lineHeight: "1.5",
                           margin: 0,
+                          fontSize: isMobile ? "0.75rem" : "0.875rem",
                         }}
                       >
-                        {card.title}
-                      </h3>
+                        {card.description}
+                      </p>
                     </div>
-                    <p
-                      style={{
-                        color: "#9ca3af",
-                        lineHeight: "1.5",
-                        margin: 0,
-                        fontSize: isMobile ? "0.75rem" : "0.875rem",
-                      }}
-                    >
-                      {card.description}
-                    </p>
-                  </div>
-                );
-              }
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Right Arrow */}
+            {currentPage < 1 && (
+              <button
+                onClick={goToNextPage}
+                style={{
+                  background: "rgba(99, 102, 241, 0.1)",
+                  border: "1px solid rgba(99, 102, 241, 0.2)",
+                  borderRadius: "50%",
+                  width: "40px",
+                  height: "40px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
+                  color: "#6366f1",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = "rgba(99, 102, 241, 0.2)";
+                  e.currentTarget.style.transform = "scale(1.05)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = "rgba(99, 102, 241, 0.1)";
+                  e.currentTarget.style.transform = "scale(1)";
+                }}
+              >
+                <ChevronRight size={20} />
+              </button>
             )}
           </div>
 
-          {/* Navigation Dots */}
+          {/* Page Indicators */}
           <div
             style={{
               display: "flex",
@@ -212,22 +320,30 @@ export default function DeanOfZenPage() {
               marginTop: "1.5rem",
             }}
           >
-            {cards.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentCardIndex(index)}
-                style={{
-                  width: "8px",
-                  height: "8px",
-                  borderRadius: "50%",
-                  border: "none",
-                  background:
-                    currentCardIndex === index ? "#6366f1" : "#d1d5db",
-                  cursor: "pointer",
-                  transition: "background-color 0.3s ease",
-                }}
-              />
-            ))}
+            <button
+              onClick={() => setCurrentPage(0)}
+              style={{
+                width: "6px",
+                height: "6px",
+                borderRadius: "50%",
+                border: "none",
+                background: currentPage === 0 ? "#6366f1" : "#d1d5db",
+                cursor: "pointer",
+                transition: "background-color 0.3s ease",
+              }}
+            />
+            <button
+              onClick={() => setCurrentPage(1)}
+              style={{
+                width: "6px",
+                height: "6px",
+                borderRadius: "50%",
+                border: "none",
+                background: currentPage === 1 ? "#6366f1" : "#d1d5db",
+                cursor: "pointer",
+                transition: "background-color 0.3s ease",
+              }}
+            />
           </div>
         </div>
       </div>

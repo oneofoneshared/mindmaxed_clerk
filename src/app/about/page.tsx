@@ -1,4 +1,6 @@
-import Image from "next/image";
+"use client";
+
+import { CheckCircle, MessageCircle, Smartphone } from "lucide-react";
 
 export default function AboutPage() {
   return (
@@ -7,8 +9,7 @@ export default function AboutPage() {
       <section
         className="about-hero"
         style={{
-          padding: "5rem 0 3rem 0",
-          marginBottom: "3rem",
+          padding: "5rem 0  0",
         }}
       >
         <div className="container">
@@ -45,67 +46,208 @@ export default function AboutPage() {
               flexWrap: "wrap",
             }}
           >
-            <Image
-              src="/hero_1.png"
-              alt="Hero Step 1"
-              width={300}
-              height={0}
-              style={{
-                width: "300px",
-                height: "auto",
-                borderRadius: "1.25rem",
-                boxShadow: "0 4px 24px rgba(99,102,241,0.10)",
-              }}
-              priority
-            />
+            {/* Card 1 */}
             <div
               style={{
+                background:
+                  "linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%)",
+                padding: "1.5rem",
+                borderRadius: "12px",
+                border: "1px solid rgba(99, 102, 241, 0.2)",
+                transition: "all 0.3s ease",
+                width: "300px",
+                height: "280px",
+                textAlign: "center",
                 display: "flex",
-                alignItems: "center",
-                fontSize: "2rem",
-                color: "#6366f1",
-                fontWeight: "bold",
+                flexDirection: "column",
+                justifyContent: "space-between",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-2px)";
+                e.currentTarget.style.boxShadow =
+                  "0 10px 20px rgba(99, 102, 241, 0.1)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow = "none";
               }}
             >
-              →
+              <div>
+                <div
+                  style={{
+                    fontSize: "2rem",
+                    color: "#8b5cf6",
+                    background: "rgba(139, 92, 246, 0.1)",
+                    padding: "1rem",
+                    borderRadius: "50%",
+                    width: "80px",
+                    height: "80px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    margin: "0 auto 1rem auto",
+                  }}
+                >
+                  <MessageCircle size={32} />
+                </div>
+                <h3
+                  style={{
+                    fontSize: "1.25rem",
+                    fontWeight: "600",
+                    color: "#8b5cf6",
+                    margin: "0 0 0.75rem 0",
+                  }}
+                >
+                  Dean of ZenAI was created to
+                </h3>
+                <p
+                  style={{
+                    color: "#9ca3af",
+                    lineHeight: "1.5",
+                    margin: 0,
+                    fontSize: "0.875rem",
+                  }}
+                >
+                  Give you immediate feedback and coaching on techniques for
+                  calmness and relaxation.
+                </p>
+              </div>
             </div>
-            <Image
-              src="/hero_2.png"
-              alt="Hero Step 2"
-              width={300}
-              height={0}
-              style={{
-                width: "300px",
-                height: "auto",
-                borderRadius: "1.25rem",
-                boxShadow: "0 4px 24px rgba(99,102,241,0.10)",
-              }}
-              priority
-            />
+
+            {/* Card 2 */}
             <div
               style={{
+                background:
+                  "linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%)",
+                padding: "1.5rem",
+                borderRadius: "12px",
+                border: "1px solid rgba(99, 102, 241, 0.2)",
+                transition: "all 0.3s ease",
+                width: "300px",
+                height: "280px",
+                textAlign: "center",
                 display: "flex",
-                alignItems: "center",
-                fontSize: "2rem",
-                color: "#6366f1",
-                fontWeight: "bold",
+                flexDirection: "column",
+                justifyContent: "space-between",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-2px)";
+                e.currentTarget.style.boxShadow =
+                  "0 10px 20px rgba(99, 102, 241, 0.1)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow = "none";
               }}
             >
-              →
+              <div>
+                <div
+                  style={{
+                    fontSize: "2rem",
+                    color: "#8b5cf6",
+                    background: "rgba(139, 92, 246, 0.1)",
+                    padding: "1rem",
+                    borderRadius: "50%",
+                    width: "80px",
+                    height: "80px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    margin: "0 auto 1rem auto",
+                  }}
+                >
+                  <Smartphone size={32} />
+                </div>
+                <h3
+                  style={{
+                    fontSize: "1.25rem",
+                    fontWeight: "600",
+                    color: "#8b5cf6",
+                    margin: "0 0 0.75rem 0",
+                  }}
+                >
+                  Call and chat with ZenAI
+                </h3>
+                <p
+                  style={{
+                    color: "#9ca3af",
+                    lineHeight: "1.5",
+                    margin: 0,
+                    fontSize: "0.875rem",
+                  }}
+                >
+                  to experience the Mindmaxed.com Zen AI enhanced program 24/7
+                </p>
+              </div>
             </div>
-            <Image
-              src="/hero_3.png"
-              alt="Hero Step 3"
-              width={300}
-              height={0}
+
+            {/* Card 3 */}
+            <div
               style={{
+                background:
+                  "linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%)",
+                padding: "1.5rem",
+                borderRadius: "12px",
+                border: "1px solid rgba(99, 102, 241, 0.2)",
+                transition: "all 0.3s ease",
                 width: "300px",
-                height: "auto",
-                borderRadius: "1.25rem",
-                boxShadow: "0 4px 24px rgba(99,102,241,0.10)",
+                height: "280px",
+                textAlign: "center",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
               }}
-              priority
-            />
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-2px)";
+                e.currentTarget.style.boxShadow =
+                  "0 10px 20px rgba(99, 102, 241, 0.1)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow = "none";
+              }}
+            >
+              <div>
+                <div
+                  style={{
+                    fontSize: "2rem",
+                    color: "#8b5cf6",
+                    background: "rgba(139, 92, 246, 0.1)",
+                    padding: "1rem",
+                    borderRadius: "50%",
+                    width: "80px",
+                    height: "80px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    margin: "0 auto 1rem auto",
+                  }}
+                >
+                  <CheckCircle size={32} />
+                </div>
+                <h3
+                  style={{
+                    fontSize: "1.25rem",
+                    fontWeight: "600",
+                    color: "#8b5cf6",
+                    margin: "0 0 0.75rem 0",
+                  }}
+                >
+                  Use the Dean of ZenAI
+                </h3>
+                <p
+                  style={{
+                    color: "#9ca3af",
+                    lineHeight: "1.5",
+                    margin: 0,
+                    fontSize: "0.875rem",
+                  }}
+                >
+                  prior to MindMaxxed sessions to maximize your time and
+                  potential for change
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -137,116 +279,202 @@ export default function AboutPage() {
             <div
               className="mission-point"
               style={{
-                background: "rgba(99,102,241,0.08)",
-                borderRadius: "1rem",
-                padding: "2rem",
+                background:
+                  "linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%)",
+                borderRadius: "12px",
+                padding: "1.5rem",
                 minWidth: 260,
                 maxWidth: 340,
                 textAlign: "center",
-                boxShadow: "0 2px 8px rgba(99,102,241,0.06)",
+                border: "1px solid rgba(99, 102, 241, 0.2)",
+                transition: "all 0.3s ease",
+                height: "280px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-2px)";
+                e.currentTarget.style.boxShadow =
+                  "0 10px 20px rgba(99, 102, 241, 0.1)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow = "none";
               }}
             >
-              <div
-                className="icon"
-                style={{
-                  marginBottom: "1rem",
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-              >
-                {/* Clean, modern brain SVG */}
-                <svg
-                  width="32"
-                  height="32"
-                  viewBox="0 0 32 32"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  style={{ color: "#6366f1" }}
-                  aria-hidden="true"
+              <div>
+                <div
+                  className="icon"
+                  style={{
+                    marginBottom: "1rem",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
                 >
-                  <path d="M11 27c-2.5 0-5-2-5-5 0-1.5.5-2.5 1.5-3.5C5 17 4 15.5 4 13.5 4 9 8 7 11 7c0-2 2-4 5-4s5 2 5 4c3 0 7 2 7 6.5 0 2-1 3.5-3.5 5C28.5 19.5 29 20.5 29 22c0 3-2.5 5-5 5-1.5 0-2.5-.5-3-1-.5.5-1.5 1-3 1z" />
-                  <path d="M16 3v26" />
-                  <path d="M10 12c1-1 3-1 6-1s5 0 6 1" />
-                  <path d="M10 18c1-1 3-1 6-1s5 0 6 1" />
-                </svg>
+                  <div
+                    style={{
+                      fontSize: "2rem",
+                      color: "#8b5cf6",
+                      background: "rgba(139, 92, 246, 0.1)",
+                      padding: "1rem",
+                      borderRadius: "50%",
+                      width: "80px",
+                      height: "80px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {/* Clean, modern brain SVG */}
+                    <svg
+                      width="32"
+                      height="32"
+                      viewBox="0 0 32 32"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      style={{ color: "#8b5cf6" }}
+                      aria-hidden="true"
+                    >
+                      <path d="M11 27c-2.5 0-5-2-5-5 0-1.5.5-2.5 1.5-3.5C5 17 4 15.5 4 13.5 4 9 8 7 11 7c0-2 2-4 5-4s5 2 5 4c3 0 7 2 7 6.5 0 2-1 3.5-3.5 5C28.5 19.5 29 20.5 29 22c0 3-2.5 5-5 5-1.5 0-2.5-.5-3-1-.5.5-1.5 1-3 1z" />
+                      <path d="M16 3v26" />
+                      <path d="M10 12c1-1 3-1 6-1s5 0 6 1" />
+                      <path d="M10 18c1-1 3-1 6-1s5 0 6 1" />
+                    </svg>
+                  </div>
+                </div>
+                <h3
+                  className="point-title"
+                  style={{
+                    fontWeight: "600",
+                    marginBottom: "0.75rem",
+                    fontSize: "1.25rem",
+                    color: "#8b5cf6",
+                  }}
+                >
+                  Brain Fitness Focus
+                </h3>
+                <p
+                  style={{
+                    color: "#9ca3af",
+                    lineHeight: "1.5",
+                    fontSize: "0.875rem",
+                  }}
+                >
+                  We treat your mind like a muscle that can be trained,
+                  strengthened, and optimized for peak performance.
+                </p>
               </div>
-              <h3
-                className="point-title"
-                style={{ fontWeight: 600, marginBottom: "0.5rem" }}
-              >
-                Brain Fitness Focus
-              </h3>
-              <p style={{ color: "#6b7280" }}>
-                We treat your mind like a muscle that can be trained,
-                strengthened, and optimized for peak performance.
-              </p>
             </div>
             <div
               className="mission-point"
               style={{
-                background: "rgba(99,102,241,0.08)",
-                borderRadius: "1rem",
-                padding: "2rem",
+                background:
+                  "linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%)",
+                borderRadius: "12px",
+                padding: "1.5rem",
                 minWidth: 260,
                 maxWidth: 340,
                 textAlign: "center",
-                boxShadow: "0 2px 8px rgba(99,102,241,0.06)",
+                border: "1px solid rgba(99, 102, 241, 0.2)",
+                transition: "all 0.3s ease",
+                height: "280px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-2px)";
+                e.currentTarget.style.boxShadow =
+                  "0 10px 20px rgba(99, 102, 241, 0.1)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow = "none";
               }}
             >
-              <div
-                className="icon"
-                style={{
-                  marginBottom: "1rem",
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-              >
-                {/* Robot SVG */}
-                <svg
-                  width="32"
-                  height="32"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  style={{ color: "#6366f1" }}
-                  aria-hidden="true"
+              <div>
+                <div
+                  className="icon"
+                  style={{
+                    marginBottom: "1rem",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
                 >
-                  <rect x="3" y="7" width="18" height="10" rx="4" />
-                  <rect
-                    x="7"
-                    y="11"
-                    width="2"
-                    height="2"
-                    rx="1"
-                    fill="#6366f1"
-                  />
-                  <rect
-                    x="15"
-                    y="11"
-                    width="2"
-                    height="2"
-                    rx="1"
-                    fill="#6366f1"
-                  />
-                  <path d="M12 7V3M8 3h8" />
-                </svg>
+                  <div
+                    style={{
+                      fontSize: "2rem",
+                      color: "#8b5cf6",
+                      background: "rgba(139, 92, 246, 0.1)",
+                      padding: "1rem",
+                      borderRadius: "50%",
+                      width: "80px",
+                      height: "80px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {/* Robot SVG */}
+                    <svg
+                      width="32"
+                      height="32"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      style={{ color: "#8b5cf6" }}
+                      aria-hidden="true"
+                    >
+                      <rect x="3" y="7" width="18" height="10" rx="4" />
+                      <rect
+                        x="7"
+                        y="11"
+                        width="2"
+                        height="2"
+                        rx="1"
+                        fill="#8b5cf6"
+                      />
+                      <rect
+                        x="15"
+                        y="11"
+                        width="2"
+                        height="2"
+                        rx="1"
+                        fill="#8b5cf6"
+                      />
+                      <path d="M12 7V3M8 3h8" />
+                    </svg>
+                  </div>
+                </div>
+                <h3
+                  className="point-title"
+                  style={{
+                    fontWeight: "600",
+                    marginBottom: "0.75rem",
+                    fontSize: "1.25rem",
+                    color: "#8b5cf6",
+                  }}
+                >
+                  AI-Enhanced Approach
+                </h3>
+                <p
+                  style={{
+                    color: "#9ca3af",
+                    lineHeight: "1.5",
+                    fontSize: "0.875rem",
+                  }}
+                >
+                  Our proprietary AI system provides personalized insights and
+                  tracks your progress for maximum impact.
+                </p>
               </div>
-              <h3
-                className="point-title"
-                style={{ fontWeight: 600, marginBottom: "0.5rem" }}
-              >
-                AI-Enhanced Approach
-              </h3>
-              <p style={{ color: "#6b7280" }}>
-                Our proprietary AI system provides personalized insights and
-                tracks your progress for maximum impact.
-              </p>
             </div>
           </div>
         </div>

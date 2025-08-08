@@ -927,7 +927,7 @@ a:hover {
 
 .testimonial-mini:hover {
     background: var(--bg-card-hover);
-    transform: translateX(10px);
+    transform: translateY(-5px);
 }
 
 .testimonial-mini p {

@@ -34,6 +34,7 @@ export default function Navbar() {
     { href: "/#testimonials", label: "Testimonials", anchor: true },
     { href: "/about", label: "About" },
     { href: "/contact", label: "Contact" },
+    { href: "/schedule", label: "Schedule" },
     { href: "/dean-of-zen", label: "Dean of Zen", anchor: false },
   ];
 
@@ -43,9 +44,9 @@ export default function Navbar() {
     { href: "/#coaches", label: "Coaches", anchor: true },
     { href: "/#pricing", label: "Pricing", anchor: true },
     { href: "/#testimonials", label: "Testimonials", anchor: true },
-    { href: "/dashboard", label: "Dashboard", anchor: false },
     { href: "/about", label: "About" },
     { href: "/contact", label: "Contact" },
+    { href: "/schedule", label: "Schedule" },
     { href: "/dean-of-zen", label: "Dean of Zen", anchor: false },
   ];
 
@@ -59,7 +60,7 @@ export default function Navbar() {
           <div className="logo">
             <Link href="/">
               <Image
-                src="/assets/images/logo/mindmaxed-logo.svg"
+                src="/brain_fitness.png"
                 alt="MindMaxED AI"
                 width={40}
                 height={40}
@@ -99,9 +100,6 @@ export default function Navbar() {
                     {link.label}
                   </Link>
                 );
-              }
-              if (!isSignedIn && link.label === "Dashboard") {
-                return null;
               }
               return link.anchor ? (
                 <a
@@ -241,9 +239,6 @@ export default function Navbar() {
                       {link.label}
                     </Link>
                   );
-                }
-                if (!isSignedIn && link.label === "Dashboard") {
-                  return null;
                 }
                 return link.anchor ? (
                   <a

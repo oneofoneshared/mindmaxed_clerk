@@ -1,7 +1,16 @@
 "use client";
 
 import { PricingTable } from "@clerk/nextjs";
-import { Brain, Coffee, Sparkles, Target, Zap } from "lucide-react";
+import {
+  Brain,
+  CheckCircle,
+  Coffee,
+  MessageCircle,
+  Smartphone,
+  Sparkles,
+  Target,
+  Zap,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
@@ -447,67 +456,208 @@ export default function Home() {
               flexWrap: "wrap",
             }}
           >
-            <Image
-              src="/hero_1.png"
-              alt="Hero Step 1"
-              width={300}
-              height={0}
-              style={{
-                width: "300px",
-                height: "auto",
-                borderRadius: "1.25rem",
-                boxShadow: "0 4px 24px rgba(99,102,241,0.10)",
-              }}
-              priority
-            />
+            {/* Card 1 */}
             <div
               style={{
+                background:
+                  "linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%)",
+                padding: "1.5rem",
+                borderRadius: "12px",
+                border: "1px solid rgba(99, 102, 241, 0.2)",
+                transition: "all 0.3s ease",
+                width: "300px",
+                height: "280px",
+                textAlign: "center",
                 display: "flex",
-                alignItems: "center",
-                fontSize: "2rem",
-                color: "#6366f1",
-                fontWeight: "bold",
+                flexDirection: "column",
+                justifyContent: "space-between",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-2px)";
+                e.currentTarget.style.boxShadow =
+                  "0 10px 20px rgba(99, 102, 241, 0.1)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow = "none";
               }}
             >
-              →
+              <div>
+                <div
+                  style={{
+                    fontSize: "2rem",
+                    color: "#8b5cf6",
+                    background: "rgba(139, 92, 246, 0.1)",
+                    padding: "1rem",
+                    borderRadius: "50%",
+                    width: "80px",
+                    height: "80px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    margin: "0 auto 1rem auto",
+                  }}
+                >
+                  <MessageCircle size={32} />
+                </div>
+                <h3
+                  style={{
+                    fontSize: "1.25rem",
+                    fontWeight: "600",
+                    color: "#8b5cf6",
+                    margin: "0 0 0.75rem 0",
+                  }}
+                >
+                  Dean of ZenAI was created to
+                </h3>
+                <p
+                  style={{
+                    color: "#9ca3af",
+                    lineHeight: "1.5",
+                    margin: 0,
+                    fontSize: "0.875rem",
+                  }}
+                >
+                  Give you immediate feedback and coaching on techniques for
+                  calmness and relaxation.
+                </p>
+              </div>
             </div>
-            <Image
-              src="/hero_2.png"
-              alt="Hero Step 2"
-              width={300}
-              height={0}
-              style={{
-                width: "300px",
-                height: "auto",
-                borderRadius: "1.25rem",
-                boxShadow: "0 4px 24px rgba(99,102,241,0.10)",
-              }}
-              priority
-            />
+
+            {/* Card 2 */}
             <div
               style={{
+                background:
+                  "linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%)",
+                padding: "1.5rem",
+                borderRadius: "12px",
+                border: "1px solid rgba(99, 102, 241, 0.2)",
+                transition: "all 0.3s ease",
+                width: "300px",
+                height: "280px",
+                textAlign: "center",
                 display: "flex",
-                alignItems: "center",
-                fontSize: "2rem",
-                color: "#6366f1",
-                fontWeight: "bold",
+                flexDirection: "column",
+                justifyContent: "space-between",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-2px)";
+                e.currentTarget.style.boxShadow =
+                  "0 10px 20px rgba(99, 102, 241, 0.1)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow = "none";
               }}
             >
-              →
+              <div>
+                <div
+                  style={{
+                    fontSize: "2rem",
+                    color: "#8b5cf6",
+                    background: "rgba(139, 92, 246, 0.1)",
+                    padding: "1rem",
+                    borderRadius: "50%",
+                    width: "80px",
+                    height: "80px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    margin: "0 auto 1rem auto",
+                  }}
+                >
+                  <Smartphone size={32} />
+                </div>
+                <h3
+                  style={{
+                    fontSize: "1.25rem",
+                    fontWeight: "600",
+                    color: "#8b5cf6",
+                    margin: "0 0 0.75rem 0",
+                  }}
+                >
+                  Call and chat with ZenAI
+                </h3>
+                <p
+                  style={{
+                    color: "#9ca3af",
+                    lineHeight: "1.5",
+                    margin: 0,
+                    fontSize: "0.875rem",
+                  }}
+                >
+                  to experience the Mindmaxed.com Zen AI enhanced program 24/7
+                </p>
+              </div>
             </div>
-            <Image
-              src="/hero_3.png"
-              alt="Hero Step 3"
-              width={300}
-              height={0}
+
+            {/* Card 3 */}
+            <div
               style={{
+                background:
+                  "linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%)",
+                padding: "1.5rem",
+                borderRadius: "12px",
+                border: "1px solid rgba(99, 102, 241, 0.2)",
+                transition: "all 0.3s ease",
                 width: "300px",
-                height: "auto",
-                borderRadius: "1.25rem",
-                boxShadow: "0 4px 24px rgba(99,102,241,0.10)",
+                height: "280px",
+                textAlign: "center",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
               }}
-              priority
-            />
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-2px)";
+                e.currentTarget.style.boxShadow =
+                  "0 10px 20px rgba(99, 102, 241, 0.1)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow = "none";
+              }}
+            >
+              <div>
+                <div
+                  style={{
+                    fontSize: "2rem",
+                    color: "#8b5cf6",
+                    background: "rgba(139, 92, 246, 0.1)",
+                    padding: "1rem",
+                    borderRadius: "50%",
+                    width: "80px",
+                    height: "80px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    margin: "0 auto 1rem auto",
+                  }}
+                >
+                  <CheckCircle size={32} />
+                </div>
+                <h3
+                  style={{
+                    fontSize: "1.25rem",
+                    fontWeight: "600",
+                    color: "#8b5cf6",
+                    margin: "0 0 0.75rem 0",
+                  }}
+                >
+                  Use the Dean of ZenAI
+                </h3>
+                <p
+                  style={{
+                    color: "#9ca3af",
+                    lineHeight: "1.5",
+                    margin: 0,
+                    fontSize: "0.875rem",
+                  }}
+                >
+                  prior to MindMaxxed sessions to maximize your time and
+                  potential for change
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>

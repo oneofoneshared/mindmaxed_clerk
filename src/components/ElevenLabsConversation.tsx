@@ -2,7 +2,7 @@
 
 import { useConversation } from "@elevenlabs/react";
 import { Play, Volume2 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface ElevenLabsConversationProps {
   agentId: string;
@@ -20,6 +20,7 @@ export default function ElevenLabsConversation({
   const [error, setError] = useState<string | null>(null);
   const [volume, setVolumeState] = useState(0.7);
   const [hasSpoken, setHasSpoken] = useState(false);
+  const audioElementRef = useRef<HTMLAudioElement | null>(null);
 
   const conversation = useConversation({
     onConnect: () => {
@@ -27,11 +28,27 @@ export default function ElevenLabsConversation({
       setIsConnected(true);
       setError(null);
       setHasSpoken(false);
+
+      // Find the audio element created by ElevenLabs SDK
+      setTimeout(() => {
+        const audioElements = document.querySelectorAll("audio");
+        if (audioElements.length > 0) {
+          audioElementRef.current = audioElements[
+            audioElements.length - 1
+          ] as HTMLAudioElement;
+          console.log("Found audio element:", audioElementRef.current);
+          if (audioElementRef.current) {
+            audioElementRef.current.volume = volume;
+            console.log("Set initial volume to:", volume);
+          }
+        }
+      }, 1000); // Give SDK time to create audio element
     },
     onDisconnect: () => {
       console.log("Disconnected from ElevenLabs conversation");
       setIsConnected(false);
       setHasSpoken(false);
+      audioElementRef.current = null;
     },
     onMessage: (message) => {
       console.log("Received message:", message);
@@ -57,6 +74,51 @@ export default function ElevenLabsConversation({
       setHasSpoken(true);
     }
   }, [conversation.isSpeaking]);
+
+  // Update volume when it changes
+  useEffect(() => {
+    if (audioElementRef.current) {
+      audioElementRef.current.volume = volume;
+      console.log("Volume updated to:", volume);
+    }
+  }, [volume]);
+
+  // Monitor for new audio elements
+  useEffect(() => {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (node.nodeType === Node.ELEMENT_NODE) {
+            const element = node as Element;
+            if (element.tagName === "AUDIO") {
+              audioElementRef.current = element as HTMLAudioElement;
+              audioElementRef.current.volume = volume;
+              console.log("Found new audio element, set volume to:", volume);
+            }
+            // Also check for audio elements within added nodes
+            const audioElements = element.querySelectorAll("audio");
+            if (audioElements.length > 0) {
+              audioElementRef.current = audioElements[
+                audioElements.length - 1
+              ] as HTMLAudioElement;
+              audioElementRef.current.volume = volume;
+              console.log(
+                "Found audio element in added node, set volume to:",
+                volume
+              );
+            }
+          }
+        });
+      });
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+
+    return () => observer.disconnect();
+  }, [volume]);
 
   const startConversation = async () => {
     try {
@@ -122,8 +184,16 @@ export default function ElevenLabsConversation({
 
   const setVolume = async (newVolume: number) => {
     try {
+      console.log("Setting volume to:", newVolume);
       setVolumeState(newVolume);
-      await conversation.setVolume({ volume: newVolume });
+
+      // Update the audio element volume
+      if (audioElementRef.current) {
+        audioElementRef.current.volume = newVolume;
+        console.log("Volume set via audio element to:", newVolume);
+      } else {
+        console.warn("Audio element not found for volume control");
+      }
     } catch (err) {
       console.error("Failed to set volume:", err);
     }
