@@ -27,27 +27,24 @@ export default function Navbar() {
   }, [checkMobile]);
 
   // Tabs for signed-in and signed-out users
-  const signedOutLinks = [
-    { href: "/#features", label: "Features", anchor: true },
-    { href: "/#coaches", label: "Coaches", anchor: true },
-    { href: "/#pricing", label: "Pricing", anchor: true },
-    { href: "/#testimonials", label: "Testimonials", anchor: true },
-    { href: "/about", label: "About" },
-    { href: "/contact", label: "Contact" },
-    { href: "/schedule", label: "Schedule" },
-    { href: "/dean-of-zen", label: "Dean of Zen", anchor: false },
-  ];
-
-  // Always show Dean of Zen tab for signed-in users, but it will be locked if not subscribed
   const signedInLinks = [
     { href: "/#features", label: "Features", anchor: true },
     { href: "/#coaches", label: "Coaches", anchor: true },
     { href: "/#pricing", label: "Pricing", anchor: true },
     { href: "/#testimonials", label: "Testimonials", anchor: true },
-    { href: "/about", label: "About" },
-    { href: "/contact", label: "Contact" },
     { href: "/schedule", label: "Schedule" },
-    { href: "/dean-of-zen", label: "Dean of Zen", anchor: false },
+    { href: "/about", label: "About" },
+    { href: "/dean-of-zen", label: "Dean of Zen" },
+  ];
+
+  const signedOutLinks = [
+    { href: "/#features", label: "Features", anchor: true },
+    { href: "/#coaches", label: "Coaches", anchor: true },
+    { href: "/#pricing", label: "Pricing", anchor: true },
+    { href: "/#testimonials", label: "Testimonials", anchor: true },
+    { href: "/schedule", label: "Schedule" },
+    { href: "/about", label: "About" },
+    { href: "/dean-of-zen", label: "Dean of Zen" },
   ];
 
   // Show all tabs if signed in, else only signedOutLinks
