@@ -84,24 +84,31 @@ export default function DeanOfZenPage() {
     }
   };
 
-  // Check subscription status with proper updates
+  // Check subscription status and whitelist with proper updates
   useEffect(() => {
     if (isSignedIn && has) {
-      const checkSubscription = async () => {
+      const checkAccess = async () => {
+        // Check for paid subscription access
         const hasZenAccess = has({ plan: "zenai_coaching" });
         const hasTransformationAccess = has({ plan: "transformation_program" });
-        setHasAccess(hasZenAccess || hasTransformationAccess);
+        const hasPaidAccess = hasZenAccess || hasTransformationAccess;
+
+        // Check for whitelist access
+        const isWhitelisted = user?.publicMetadata?.isWhitelisted === true;
+
+        // Grant access if user has paid subscription OR is whitelisted
+        setHasAccess(hasPaidAccess || isWhitelisted);
       };
 
-      checkSubscription();
+      checkAccess();
 
       // Set up polling to check for subscription changes
-      const interval = setInterval(checkSubscription, 2000);
+      const interval = setInterval(checkAccess, 2000);
       return () => clearInterval(interval);
     } else {
       setHasAccess(false);
     }
-  }, [isSignedIn, has]);
+  }, [isSignedIn, has, user?.publicMetadata?.isWhitelisted]);
 
   // const handleSubscribe = () => {
   //   // @ts-expect-error Clerk billing path is supported but not in types
