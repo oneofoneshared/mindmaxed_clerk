@@ -38,5 +38,6 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 ## MindMaxed Features
 
 - Clerk authentication with subscription management
-- ElevenLabs AI voice integration
+- ElevenLabs AI voice integration for Dean of Zen
 - Twilio call routing system (in development)
+- n8n automation workflows
