@@ -121,10 +121,7 @@ export default function Navbar() {
             {!isMobile &&
               (!isSignedIn ? (
                 <>
-                  <SignUpButton
-                    mode="redirect"
-                    signInForceRedirectUrl={pathname}
-                  >
+                  <SignUpButton>
                     <button
                       className="cta-button primary"
                       style={{
@@ -149,7 +146,7 @@ export default function Navbar() {
                       Sign Up
                     </button>
                   </SignUpButton>
-                  <SignInButton mode="redirect" forceRedirectUrl={pathname}>
+                  <SignInButton>
                     <button
                       className="secondary-button"
                       style={{
