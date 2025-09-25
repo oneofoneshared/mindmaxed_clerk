@@ -133,12 +133,12 @@ export default function DeanOfZenPage() {
         style={{ marginTop: "1rem", marginBottom: "0rem", textAlign: "center" }}
       >
         <h1 className="section-title">Dean of Zen</h1>
-        {/* Manual Card Navigation */}
+        {/* Improved Mobile Card Navigation */}
         <div
           style={{
             marginTop: "2rem",
             marginBottom: "2rem",
-            maxWidth: isMobile ? "300px" : "1000px",
+            maxWidth: isMobile ? "100%" : "1000px",
             marginLeft: "auto",
             marginRight: "auto",
             position: "relative",
@@ -149,12 +149,12 @@ export default function DeanOfZenPage() {
           <div
             style={{
               display: "flex",
-              gap: "1.5rem",
+              gap: isMobile ? "1rem" : "1.5rem",
               justifyContent: "center",
               alignItems: "center",
             }}
           >
-            {/* Left Arrow */}
+            {/* Left Arrow - Larger touch target on mobile */}
             {currentPage > 0 && (
               <button
                 onClick={goToPrevPage}
@@ -162,14 +162,15 @@ export default function DeanOfZenPage() {
                   background: "rgba(99, 102, 241, 0.1)",
                   border: "1px solid rgba(99, 102, 241, 0.2)",
                   borderRadius: "50%",
-                  width: "40px",
-                  height: "40px",
+                  width: isMobile ? "48px" : "40px",
+                  height: isMobile ? "48px" : "40px",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   cursor: "pointer",
                   transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
                   color: "#6366f1",
+                  flexShrink: 0,
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.background = "rgba(99, 102, 241, 0.2)";
@@ -180,28 +181,31 @@ export default function DeanOfZenPage() {
                   e.currentTarget.style.transform = "scale(1)";
                 }}
               >
-                <ChevronLeft size={20} />
+                <ChevronLeft size={isMobile ? 24 : 20} />
               </button>
             )}
 
-            {/* Cards with Smooth Sliding */}
+            {/* Cards with Improved Mobile Layout */}
             <div
               style={{
                 display: "flex",
-                gap: "1.5rem",
+                gap: isMobile ? "0" : "1.5rem",
                 flex: 1,
                 justifyContent: "center",
                 overflow: "hidden",
                 position: "relative",
+                minHeight: isMobile ? "180px" : "auto",
               }}
             >
               <div
                 style={{
                   display: "flex",
-                  gap: "1.5rem",
+                  gap: isMobile ? "0" : "1.5rem",
                   transition: "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                  transform: getTransformValue(),
-                  width: "100%",
+                  transform: isMobile 
+                    ? `translateX(-${currentPage * 100}%)` 
+                    : getTransformValue(),
+                  width: isMobile ? `${cards.length * 100}%` : "100%",
                   willChange: "transform",
                 }}
               >
@@ -211,88 +215,102 @@ export default function DeanOfZenPage() {
                     <div
                       key={index}
                       style={{
-                        flex: isMobile ? "1" : "0 0 auto",
-                        width: isMobile ? "100%" : "calc(33.333% - 1rem)",
+                        flex: isMobile ? "0 0 100%" : "0 0 auto",
+                        width: isMobile ? `${100 / cards.length}%` : "calc(33.333% - 1rem)",
                         background:
                           "linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%)",
-                        padding: isMobile ? "0.75rem" : "1rem",
+                        padding: isMobile ? "1rem" : "1rem",
                         borderRadius: "12px",
                         border: "1px solid rgba(99, 102, 241, 0.2)",
                         transition: "all 0.3s ease",
                         flexShrink: 0,
+                        margin: isMobile ? "0 0.5rem" : "0",
+                        minHeight: isMobile ? "160px" : "auto",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "space-between",
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = "translateY(-2px)";
-                        e.currentTarget.style.boxShadow =
-                          "0 10px 20px rgba(99, 102, 241, 0.1)";
+                        if (!isMobile) {
+                          e.currentTarget.style.transform = "translateY(-2px)";
+                          e.currentTarget.style.boxShadow =
+                            "0 10px 20px rgba(99, 102, 241, 0.1)";
+                        }
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = "translateY(0)";
-                        e.currentTarget.style.boxShadow = "none";
+                        if (!isMobile) {
+                          e.currentTarget.style.transform = "translateY(0)";
+                          e.currentTarget.style.boxShadow = "none";
+                        }
                       }}
                     >
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "0.5rem",
-                          marginBottom: "0.75rem",
-                        }}
-                      >
+                      <div>
                         <div
                           style={{
-                            fontSize: "1.25rem",
-                            color: "#8b5cf6",
-                            background: "rgba(139, 92, 246, 0.1)",
-                            padding: "0.375rem",
-                            borderRadius: "8px",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "0.75rem",
+                            marginBottom: "1rem",
                           }}
                         >
-                          <CardIcon size={16} />
+                          <div
+                            style={{
+                              fontSize: "1.25rem",
+                              color: "#8b5cf6",
+                              background: "rgba(139, 92, 246, 0.1)",
+                              padding: isMobile ? "0.5rem" : "0.375rem",
+                              borderRadius: "8px",
+                              flexShrink: 0,
+                            }}
+                          >
+                            <CardIcon size={isMobile ? 20 : 16} />
+                          </div>
+                          <h3
+                            style={{
+                              fontSize: isMobile ? "1rem" : "1rem",
+                              fontWeight: "600",
+                              color: "#8b5cf6",
+                              margin: 0,
+                              lineHeight: "1.3",
+                            }}
+                          >
+                            {card.title}
+                          </h3>
                         </div>
-                        <h3
+                        <p
                           style={{
-                            fontSize: isMobile ? "0.875rem" : "1rem",
-                            fontWeight: "600",
-                            color: "#8b5cf6",
+                            color: "#9ca3af",
+                            lineHeight: "1.5",
                             margin: 0,
+                            fontSize: isMobile ? "0.875rem" : "0.875rem",
                           }}
                         >
-                          {card.title}
-                        </h3>
+                          {card.description}
+                        </p>
                       </div>
-                      <p
-                        style={{
-                          color: "#9ca3af",
-                          lineHeight: "1.5",
-                          margin: 0,
-                          fontSize: isMobile ? "0.75rem" : "0.875rem",
-                        }}
-                      >
-                        {card.description}
-                      </p>
                     </div>
                   );
                 })}
               </div>
             </div>
 
-            {/* Right Arrow */}
-            {currentPage < 1 && (
+            {/* Right Arrow - Larger touch target on mobile */}
+            {(isMobile ? currentPage < cards.length - 1 : currentPage < 1) && (
               <button
                 onClick={goToNextPage}
                 style={{
                   background: "rgba(99, 102, 241, 0.1)",
                   border: "1px solid rgba(99, 102, 241, 0.2)",
                   borderRadius: "50%",
-                  width: "40px",
-                  height: "40px",
+                  width: isMobile ? "48px" : "40px",
+                  height: isMobile ? "48px" : "40px",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   cursor: "pointer",
                   transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
                   color: "#6366f1",
+                  flexShrink: 0,
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.background = "rgba(99, 102, 241, 0.2)";
@@ -303,44 +321,36 @@ export default function DeanOfZenPage() {
                   e.currentTarget.style.transform = "scale(1)";
                 }}
               >
-                <ChevronRight size={20} />
+                <ChevronRight size={isMobile ? 24 : 20} />
               </button>
             )}
           </div>
 
-          {/* Page Indicators */}
+          {/* Improved Page Indicators */}
           <div
             style={{
               display: "flex",
               justifyContent: "center",
-              gap: "0.5rem",
+              gap: "0.75rem",
               marginTop: "1.5rem",
             }}
           >
-            <button
-              onClick={() => setCurrentPage(0)}
-              style={{
-                width: "6px",
-                height: "6px",
-                borderRadius: "50%",
-                border: "none",
-                background: currentPage === 0 ? "#6366f1" : "#d1d5db",
-                cursor: "pointer",
-                transition: "background-color 0.3s ease",
-              }}
-            />
-            <button
-              onClick={() => setCurrentPage(1)}
-              style={{
-                width: "6px",
-                height: "6px",
-                borderRadius: "50%",
-                border: "none",
-                background: currentPage === 1 ? "#6366f1" : "#d1d5db",
-                cursor: "pointer",
-                transition: "background-color 0.3s ease",
-              }}
-            />
+            {(isMobile ? cards : [0, 1]).map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentPage(index)}
+                style={{
+                  width: isMobile ? "8px" : "6px",
+                  height: isMobile ? "8px" : "6px",
+                  borderRadius: "50%",
+                  border: "none",
+                  background: currentPage === index ? "#6366f1" : "#d1d5db",
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                  transform: currentPage === index ? "scale(1.2)" : "scale(1)",
+                }}
+              />
+            ))}
           </div>
         </div>
       </div>
@@ -399,6 +409,86 @@ export default function DeanOfZenPage() {
       {/* Pricing table for non-subscribers */}
       {!hasAccess && (
         <div style={{ margin: "2rem auto", width: "100%", maxWidth: "800px" }}>
+          {/* Pricing Toggle Labels */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              marginBottom: "2rem",
+              gap: "1rem",
+              flexWrap: "wrap",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.75rem",
+                padding: "0.75rem 1.25rem",
+                background: "rgba(99, 102, 241, 0.1)",
+                borderRadius: "12px",
+                border: "1px solid rgba(99, 102, 241, 0.2)",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: "0.875rem",
+                  fontWeight: "600",
+                  color: "#6366f1",
+                }}
+              >
+                Monthly
+              </div>
+              <div
+                style={{
+                  width: "44px",
+                  height: "24px",
+                  background: "#e5e7eb",
+                  borderRadius: "12px",
+                  position: "relative",
+                  cursor: "pointer",
+                }}
+              >
+                <div
+                  style={{
+                    width: "20px",
+                    height: "20px",
+                    background: "#6366f1",
+                    borderRadius: "50%",
+                    position: "absolute",
+                    top: "2px",
+                    left: "2px",
+                    transition: "transform 0.2s ease",
+                    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                  }}
+                />
+              </div>
+              <div
+                style={{
+                  fontSize: "0.875rem",
+                  fontWeight: "600",
+                  color: "#8b5cf6",
+                }}
+              >
+                Yearly
+              </div>
+            </div>
+            <div
+              style={{
+                fontSize: "0.75rem",
+                color: "#10b981",
+                fontWeight: "500",
+                padding: "0.375rem 0.75rem",
+                background: "rgba(16, 185, 129, 0.1)",
+                borderRadius: "6px",
+                border: "1px solid rgba(16, 185, 129, 0.2)",
+              }}
+            >
+              💰 Save up to 20% with yearly billing
+            </div>
+          </div>
+
           <PricingTable
             appearance={{
               elements: {

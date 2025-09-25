@@ -1,6 +1,6 @@
 "use client";
 
-import { PricingTable } from "@clerk/nextjs";
+import { PricingTable, useAuth, useUser } from "@clerk/nextjs";
 import {
   Brain,
   CheckCircle,
@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import ElevenLabsHomepageWidget from "../components/ElevenLabsHomepageWidget";
 
@@ -119,6 +120,11 @@ function usePricingCards() {
 // }
 
 export default function Home() {
+  const { isSignedIn, user } = useUser();
+  const { has } = useAuth();
+  const router = useRouter();
+  const [isRedirecting, setIsRedirecting] = useState(false);
+
   const {
     // selectedPlan,
     // pricingRefs,
@@ -149,6 +155,33 @@ export default function Home() {
   const [showScrollUp, setShowScrollUp] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [carouselIndex, setCarouselIndex] = useState(0);
+
+  // Redirect subscribed users to Dean of Zen
+  useEffect(() => {
+    if (isSignedIn && has && !isRedirecting) {
+      const checkSubscriptionAndRedirect = async () => {
+        try {
+          // Check for paid subscription access
+          const hasZenAccess = has({ plan: "zenai_coaching" });
+          const hasTransformationAccess = has({ plan: "transformation_program" });
+          const hasPaidAccess = hasZenAccess || hasTransformationAccess;
+
+          // Check for whitelist access
+          const isWhitelisted = user?.publicMetadata?.isWhitelisted === true;
+
+          // Redirect if user has access
+          if (hasPaidAccess || isWhitelisted) {
+            setIsRedirecting(true);
+            router.push('/dean-of-zen');
+          }
+        } catch (error) {
+          console.error('Error checking subscription:', error);
+        }
+      };
+
+      checkSubscriptionAndRedirect();
+    }
+  }, [isSignedIn, has, user?.publicMetadata?.isWhitelisted, router, isRedirecting]);
 
   // Auto-rotate carousel
   useEffect(() => {
@@ -899,6 +932,87 @@ export default function Home() {
               level.
             </p>
           </div>
+          
+          {/* Pricing Toggle Labels */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              marginBottom: "2rem",
+              gap: "1rem",
+              flexWrap: "wrap",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.75rem",
+                padding: "0.75rem 1.25rem",
+                background: "rgba(99, 102, 241, 0.1)",
+                borderRadius: "12px",
+                border: "1px solid rgba(99, 102, 241, 0.2)",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: "0.875rem",
+                  fontWeight: "600",
+                  color: "#6366f1",
+                }}
+              >
+                Monthly
+              </div>
+              <div
+                style={{
+                  width: "44px",
+                  height: "24px",
+                  background: "#e5e7eb",
+                  borderRadius: "12px",
+                  position: "relative",
+                  cursor: "pointer",
+                }}
+              >
+                <div
+                  style={{
+                    width: "20px",
+                    height: "20px",
+                    background: "#6366f1",
+                    borderRadius: "50%",
+                    position: "absolute",
+                    top: "2px",
+                    left: "2px",
+                    transition: "transform 0.2s ease",
+                    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                  }}
+                />
+              </div>
+              <div
+                style={{
+                  fontSize: "0.875rem",
+                  fontWeight: "600",
+                  color: "#8b5cf6",
+                }}
+              >
+                Yearly
+              </div>
+            </div>
+            <div
+              style={{
+                fontSize: "0.75rem",
+                color: "#10b981",
+                fontWeight: "500",
+                padding: "0.375rem 0.75rem",
+                background: "rgba(16, 185, 129, 0.1)",
+                borderRadius: "6px",
+                border: "1px solid rgba(16, 185, 129, 0.2)",
+              }}
+            >
+              💰 Save up to 20% with yearly billing
+            </div>
+          </div>
+
           <PricingTable
             appearance={{
               elements: {
