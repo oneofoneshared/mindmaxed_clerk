@@ -20,6 +20,8 @@ export default function DeanOfZenPage() {
   const [hasAccess, setHasAccess] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
 
   // Card data
   const cards = [
@@ -65,7 +67,8 @@ export default function DeanOfZenPage() {
 
   // Navigation functions
   const goToNextPage = () => {
-    if (currentPage < 1) {
+    const maxPage = isMobile ? cards.length - 1 : 1;
+    if (currentPage < maxPage) {
       setCurrentPage(currentPage + 1);
     }
   };
@@ -81,6 +84,33 @@ export default function DeanOfZenPage() {
       return "translateX(0)";
     } else {
       return "translateX(-33.333%)"; // Slide left by one card width
+    }
+  };
+
+  // Touch event handlers for swipe functionality
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (!isMobile) return;
+    setTouchEnd(0); // Reset touchEnd
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isMobile) return;
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!isMobile || !touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) {
+      goToNextPage();
+    }
+    if (isRightSwipe) {
+      goToPrevPage();
     }
   };
 
@@ -223,6 +253,9 @@ export default function DeanOfZenPage() {
                 position: "relative",
                 minHeight: isMobile ? "180px" : "auto",
               }}
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
             >
               <div
                 style={{
