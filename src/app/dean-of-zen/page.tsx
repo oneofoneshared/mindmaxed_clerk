@@ -215,8 +215,8 @@ export default function DeanOfZenPage() {
                     <div
                       key={index}
                       style={{
-                        flex: isMobile ? "0 0 100%" : "0 0 auto",
-                        width: isMobile ? `${100 / cards.length}%` : "calc(33.333% - 1rem)",
+                        flex: isMobile ? "0 0 auto" : "0 0 auto",
+                        width: isMobile ? "calc(100% - 1rem)" : "calc(33.333% - 1rem)",
                         background:
                           "linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%)",
                         padding: isMobile ? "1rem" : "1rem",
@@ -229,6 +229,7 @@ export default function DeanOfZenPage() {
                         display: "flex",
                         flexDirection: "column",
                         justifyContent: "space-between",
+                        maxWidth: isMobile ? "calc(100vw - 8rem)" : "none",
                       }}
                       onMouseEnter={(e) => {
                         if (!isMobile) {
