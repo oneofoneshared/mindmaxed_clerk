@@ -249,55 +249,68 @@ export default function DeanOfZenPage() {
       {/* Pricing table for non-subscribers */}
       {!hasAccess && (
         <div style={{ margin: "2rem auto", width: "100%", maxWidth: "800px" }}>
-          <PricingTable
-            appearance={{
-              elements: {
-                pricingTable: {
-                  display: "flex",
+          <div>
+            <PricingTable
+              appearance={{
+                elements: {
+                  pricingTable: {
+                    display: "flex",
+                  },
+                  pricingTableButton: {
+                    background: "linear-gradient(45deg, #6366f1, #8b5cf6)",
+                    color: "#fff",
+                    border: "none",
+                  },
+                  formButtonPrimary: {
+                    background: "linear-gradient(45deg, #6366f1, #8b5cf6)",
+                    color: "#fff",
+                    border: "none",
+                  },
+                  button: {
+                    background: "linear-gradient(45deg, #6366f1, #8b5cf6)",
+                    color: "#fff",
+                    border: "none",
+                  },
+                  pricingTableCard: {
+                    background: "rgba(255, 255, 255, 0.05)",
+                    borderRadius: "1.25rem",
+                    border: "2px solid rgba(99, 102, 241, 0.3)",
+                    minWidth: "400px",
+                  },
+                  pricingTableCardTitle: {
+                    color: "#8b5cf6",
+                  },
+                  pricingTableCardFeatures: {
+                    background: "#242230",
+                  },
+                  pricingTableCardFeaturesListItemTitle: {
+                    color: "#8b5cf6",
+                  },
+                  pricingTableCardFee: {
+                    color: "#8b5cf6",
+                  },
+                  pricingTableCardDescription: {
+                    color: "#9ca3af",
+                  },
+                  pricingTableCardFeePeriod: {
+                    color: "#ffffff !important",
+                    fontWeight: "600 !important",
+                  },
                 },
-                pricingTableButton: {
-                  background: "linear-gradient(45deg, #6366f1, #8b5cf6)",
-                  color: "#fff",
-                  border: "none",
-                },
-                formButtonPrimary: {
-                  background: "linear-gradient(45deg, #6366f1, #8b5cf6)",
-                  color: "#fff",
-                  border: "none",
-                },
-                button: {
-                  background: "linear-gradient(45deg, #6366f1, #8b5cf6)",
-                  color: "#fff",
-                  border: "none",
-                },
-                pricingTableCard: {
-                  background: "rgba(255, 255, 255, 0.05)",
-                  borderRadius: "1.25rem",
-                  border: "2px solid rgba(99, 102, 241, 0.3)",
-                  minWidth: "400px",
-                },
-                pricingTableCardTitle: {
-                  color: "#8b5cf6",
-                },
-                pricingTableCardFeatures: {
-                  background: "#242230",
-                },
-                pricingTableCardFeaturesListItemTitle: {
-                  color: "#8b5cf6",
-                },
-                pricingTableCardFee: {
-                  color: "#8b5cf6",
-                },
-                pricingTableCardDescription: {
-                  color: "#9ca3af",
-                },
-                pricingTableCardFeePeriod: {
-                  color: "#ffffff !important",
-                  fontWeight: "600 !important",
-                },
-              },
-            }}
-          />
+              }}
+            />
+            <style jsx global>{`
+              .cl-internal-7hfzfg {
+                color: #ffffff !important;
+                font-weight: 600 !important;
+              }
+              [data-localization-key="commerce.billedAnnually"],
+              [data-localization-key="commerce.billedMonthly"] {
+                color: #ffffff !important;
+                font-weight: 600 !important;
+              }
+            `}</style>
+          </div>
         </div>
       )}
     </div>
