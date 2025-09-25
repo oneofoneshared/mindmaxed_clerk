@@ -156,13 +156,19 @@ export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
   const [carouselIndex, setCarouselIndex] = useState(0);
 
-  // Redirect subscribed users to Dean of Zen (only from homepage)
+  // One-time redirect for subscribed users after login
   useEffect(() => {
     if (isSignedIn && has && !isRedirecting) {
       const checkSubscriptionAndRedirect = async () => {
         try {
           // Only redirect if we're on the homepage
           if (window.location.pathname !== '/') {
+            return;
+          }
+
+          // Check if we've already redirected this session
+          const hasRedirectedThisSession = sessionStorage.getItem('hasRedirectedToZen');
+          if (hasRedirectedThisSession) {
             return;
           }
 
@@ -174,8 +180,9 @@ export default function Home() {
           // Check for whitelist access
           const isWhitelisted = user?.publicMetadata?.isWhitelisted === true;
 
-          // Redirect if user has access
+          // Redirect if user has access (one-time only)
           if (hasPaidAccess || isWhitelisted) {
+            sessionStorage.setItem('hasRedirectedToZen', 'true');
             setIsRedirecting(true);
             router.push('/dean-of-zen');
           }
