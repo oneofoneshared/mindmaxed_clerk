@@ -130,13 +130,40 @@ export default function DeanOfZenPage() {
     >
       <div
         className="section-header"
-        style={{ marginTop: "1rem", marginBottom: "0rem", textAlign: "center" }}
+        style={{ marginTop: "1rem", marginBottom: "2rem", textAlign: "center" }}
       >
         <h1 className="section-title">Dean of Zen</h1>
-        {/* Improved Mobile Card Navigation */}
+      </div>
+
+      {/* ElevenLabs Conversation - only for subscribed users */}
+      {isSignedIn && hasAccess && (
         <div
           style={{
-            marginTop: "2rem",
+            width: "100%",
+            maxWidth: "900px",
+            margin: "2rem auto",
+            padding: "0 1rem",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <ElevenLabsConversation
+            agentId={
+              process.env.NEXT_PUBLIC_ELEVENLABS_AGENT_ID ||
+              "agent_01jyejgskkf9as5h6fr0pxstz7"
+            }
+            voiceId={process.env.NEXT_PUBLIC_ELEVENLABS_VOICE_ID}
+            userId={user?.id}
+          />
+        </div>
+      )}
+
+      {/* Carousel - shown for subscribed users after conversation */}
+      {isSignedIn && hasAccess && (
+        <div
+          style={{
+            marginTop: "3rem",
             marginBottom: "2rem",
             maxWidth: isMobile ? "100%" : "1000px",
             marginLeft: "auto",
@@ -353,30 +380,6 @@ export default function DeanOfZenPage() {
               />
             ))}
           </div>
-        </div>
-      </div>
-
-      {/* ElevenLabs Conversation - only for subscribed users */}
-      {isSignedIn && hasAccess && (
-        <div
-          style={{
-            width: "100%",
-            maxWidth: "900px",
-            margin: "2rem auto",
-            padding: "0 1rem",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <ElevenLabsConversation
-            agentId={
-              process.env.NEXT_PUBLIC_ELEVENLABS_AGENT_ID ||
-              "agent_01jyejgskkf9as5h6fr0pxstz7"
-            }
-            voiceId={process.env.NEXT_PUBLIC_ELEVENLABS_VOICE_ID}
-            userId={user?.id}
-          />
         </div>
       )}
 
