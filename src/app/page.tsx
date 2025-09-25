@@ -239,10 +239,27 @@ export default function Home() {
         </div>
         <div className="container" style={{ position: "relative", zIndex: 2 }}>
           <h1 className="hero-title">AI-Powered Brain Fitness Coaching</h1>
+          
+          {/* Client Stats - Moved Higher */}
+          <div className="hero-stats" style={{ marginTop: "2rem", marginBottom: "3rem" }}>
+            <div className="stat">
+              <div className="stat-number">1,200+</div>
+              <div className="stat-label">Clients Transformed</div>
+            </div>
+            <div className="stat">
+              <div className="stat-number">20+</div>
+              <div className="stat-label">Years Experience</div>
+            </div>
+            <div className="stat">
+              <div className="stat-number">98%</div>
+              <div className="stat-label">Success Rate</div>
+            </div>
+          </div>
+
           <div
             className="hero-subtitle"
             style={{
-              marginTop: "5rem",
+              marginTop: "2rem",
               marginBottom: "2rem",
               maxWidth: "800px",
               marginLeft: "auto",
@@ -477,20 +494,6 @@ export default function Home() {
               Learn More
             </Link>
           </div>
-          <div className="hero-stats">
-            <div className="stat">
-              <div className="stat-number">1,200+</div>
-              <div className="stat-label">Clients Transformed</div>
-            </div>
-            <div className="stat">
-              <div className="stat-number">15+</div>
-              <div className="stat-label">Years Experience</div>
-            </div>
-            <div className="stat">
-              <div className="stat-number">98%</div>
-              <div className="stat-label">Success Rate</div>
-            </div>
-          </div>
           <div
             style={{
               display: "flex",
@@ -706,7 +709,95 @@ export default function Home() {
           </div>
         </div>
       </section>
-      {/* Dean of Zen AI Workflow Image */}
+
+      {/* Dustin Dean Quote Section */}
+      <section style={{ 
+        padding: "4rem 0", 
+        background: "linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(139, 92, 246, 0.03) 100%)",
+        borderTop: "1px solid rgba(99, 102, 241, 0.1)",
+        borderBottom: "1px solid rgba(99, 102, 241, 0.1)"
+      }}>
+        <div className="container">
+          <div style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "3rem",
+            flexWrap: "wrap",
+            maxWidth: "1000px",
+            margin: "0 auto"
+          }}>
+            {/* Dustin's Photo */}
+            <div style={{
+              flexShrink: 0,
+              textAlign: "center"
+            }}>
+              <Image
+                src="/assets/images/coaches/dustin.jpg"
+                alt="Dustin Dean, PMHNP-BC"
+                width={150}
+                height={150}
+                style={{
+                  borderRadius: "50%",
+                  border: "4px solid rgba(139, 92, 246, 0.3)",
+                  boxShadow: "0 8px 32px rgba(139, 92, 246, 0.2)"
+                }}
+              />
+              <div style={{
+                marginTop: "1rem",
+                fontSize: "0.875rem",
+                color: "#8b5cf6",
+                fontWeight: "600"
+              }}>
+                PMHNP-BC | Brain Fitness Pioneer
+              </div>
+            </div>
+
+            {/* Quote */}
+            <div style={{
+              flex: 1,
+              minWidth: "300px",
+              maxWidth: "600px"
+            }}>
+              <blockquote style={{
+                fontSize: "1.5rem",
+                fontWeight: "600",
+                color: "#1f2937",
+                lineHeight: "1.4",
+                fontStyle: "italic",
+                margin: 0,
+                position: "relative"
+              }}>
+                <span style={{
+                  fontSize: "3rem",
+                  color: "#8b5cf6",
+                  position: "absolute",
+                  top: "-1rem",
+                  left: "-1rem",
+                  fontFamily: "serif"
+                }}>"</span>
+                The most successful people I know have a secret: they invest five minutes daily in their mental fitness. It's like having a personal reset button for your mind. Once you experience it, you'll wonder how you ever lived without it.
+                <span style={{
+                  fontSize: "3rem",
+                  color: "#8b5cf6",
+                  position: "absolute",
+                  bottom: "-2rem",
+                  right: "0",
+                  fontFamily: "serif"
+                }}>"</span>
+              </blockquote>
+              <div style={{
+                marginTop: "1.5rem",
+                fontSize: "1rem",
+                color: "#6b7280",
+                fontWeight: "500"
+              }}>
+                — Dustin Dean, PMHNP-BC | "The Dean of Zen"
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* AI Features Section */}
       <section className="ai-features" id="features">
