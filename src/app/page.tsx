@@ -156,11 +156,16 @@ export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
   const [carouselIndex, setCarouselIndex] = useState(0);
 
-  // Redirect subscribed users to Dean of Zen
+  // Redirect subscribed users to Dean of Zen (only from homepage)
   useEffect(() => {
     if (isSignedIn && has && !isRedirecting) {
       const checkSubscriptionAndRedirect = async () => {
         try {
+          // Only redirect if we're on the homepage
+          if (window.location.pathname !== '/') {
+            return;
+          }
+
           // Check for paid subscription access
           const hasZenAccess = has({ plan: "zenai_coaching" });
           const hasTransformationAccess = has({ plan: "transformation_program" });
