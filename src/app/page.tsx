@@ -990,7 +990,10 @@ export default function Home() {
                     color: "#8b5cf6",
                   },
                   pricingTableCardDescription: {
-                    color: "#9ca3af",
+                    color: "#ffffff !important",
+                    fontSize: "16px !important",
+                    fontWeight: "500 !important",
+                    lineHeight: "1.5 !important",
                   },
                   pricingTableCardFeePeriod: {
                     color: "#ffffff !important",
