@@ -249,86 +249,6 @@ export default function DeanOfZenPage() {
       {/* Pricing table for non-subscribers */}
       {!hasAccess && (
         <div style={{ margin: "2rem auto", width: "100%", maxWidth: "800px" }}>
-          {/* Pricing Toggle Labels */}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              marginBottom: "2rem",
-              gap: "1rem",
-              flexWrap: "wrap",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.75rem",
-                padding: "0.75rem 1.25rem",
-                background: "rgba(99, 102, 241, 0.1)",
-                borderRadius: "12px",
-                border: "1px solid rgba(99, 102, 241, 0.2)",
-              }}
-            >
-              <div
-                style={{
-                  fontSize: "0.875rem",
-                  fontWeight: "600",
-                  color: "#6366f1",
-                }}
-              >
-                Monthly
-              </div>
-              <div
-                style={{
-                  width: "44px",
-                  height: "24px",
-                  background: "#e5e7eb",
-                  borderRadius: "12px",
-                  position: "relative",
-                  cursor: "pointer",
-                }}
-              >
-                <div
-                  style={{
-                    width: "20px",
-                    height: "20px",
-                    background: "#6366f1",
-                    borderRadius: "50%",
-                    position: "absolute",
-                    top: "2px",
-                    left: "2px",
-                    transition: "transform 0.2s ease",
-                    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-                  }}
-                />
-              </div>
-              <div
-                style={{
-                  fontSize: "0.875rem",
-                  fontWeight: "600",
-                  color: "#8b5cf6",
-                }}
-              >
-                Yearly
-              </div>
-            </div>
-            <div
-              style={{
-                fontSize: "0.75rem",
-                color: "#10b981",
-                fontWeight: "500",
-                padding: "0.375rem 0.75rem",
-                background: "rgba(16, 185, 129, 0.1)",
-                borderRadius: "6px",
-                border: "1px solid rgba(16, 185, 129, 0.2)",
-              }}
-            >
-              💰 Save up to 20% with yearly billing
-            </div>
-          </div>
-
           <PricingTable
             appearance={{
               elements: {
@@ -372,7 +292,8 @@ export default function DeanOfZenPage() {
                   color: "#9ca3af",
                 },
                 pricingTableCardFeePeriod: {
-                  color: "#9ca3af",
+                  color: "#ffffff !important",
+                  fontWeight: "600 !important",
                 },
               },
             }}
