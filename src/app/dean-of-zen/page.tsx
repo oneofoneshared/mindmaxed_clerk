@@ -3,8 +3,6 @@
 import { PricingTable, useAuth, useUser } from "@clerk/nextjs";
 import {
   Brain,
-  ChevronLeft,
-  ChevronRight,
   Compass,
   Mic,
   Smartphone,
@@ -18,10 +16,6 @@ export default function DeanOfZenPage() {
   // const { openUserProfile } = useClerk();
   const { has } = useAuth();
   const [hasAccess, setHasAccess] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [touchStart, setTouchStart] = useState(0);
-  const [touchEnd, setTouchEnd] = useState(0);
 
   // Card data
   const cards = [
@@ -57,62 +51,6 @@ export default function DeanOfZenPage() {
     },
   ];
 
-  // Check if mobile
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
-  // Navigation functions
-  const goToNextPage = () => {
-    const maxPage = isMobile ? cards.length - 1 : 1;
-    if (currentPage < maxPage) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const goToPrevPage = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  const getTransformValue = () => {
-    if (currentPage === 0) {
-      return "translateX(0)";
-    } else {
-      return "translateX(-33.333%)"; // Slide left by one card width
-    }
-  };
-
-  // Touch event handlers for swipe functionality
-  const handleTouchStart = (e: React.TouchEvent) => {
-    if (!isMobile) return;
-    setTouchEnd(0); // Reset touchEnd
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isMobile) return;
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    if (!isMobile || !touchStart || !touchEnd) return;
-    
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > 50;
-    const isRightSwipe = distance < -50;
-
-    if (isLeftSwipe) {
-      goToNextPage();
-    }
-    if (isRightSwipe) {
-      goToPrevPage();
-    }
-  };
 
   // Check subscription status and whitelist with proper updates
   useEffect(() => {
@@ -189,229 +127,94 @@ export default function DeanOfZenPage() {
         </div>
       )}
 
-      {/* Carousel - shown for subscribed users after conversation */}
+      {/* Static Cards Column - shown for subscribed users after conversation */}
       {isSignedIn && hasAccess && (
         <div
           style={{
             marginTop: "3rem",
             marginBottom: "2rem",
-            maxWidth: isMobile ? "100%" : "1000px",
+            maxWidth: "800px",
             marginLeft: "auto",
             marginRight: "auto",
-            position: "relative",
-            padding: isMobile ? "0 1rem" : "0 1rem",
+            padding: "0 1rem",
           }}
         >
-          {/* Cards Container */}
           <div
             style={{
               display: "flex",
-              gap: isMobile ? "1rem" : "1.5rem",
-              justifyContent: "center",
-              alignItems: "center",
+              flexDirection: "column",
+              gap: "1.5rem",
             }}
           >
-            {/* Left Arrow - Larger touch target on mobile */}
-            {currentPage > 0 && (
-              <button
-                onClick={goToPrevPage}
-                style={{
-                  background: "rgba(99, 102, 241, 0.1)",
-                  border: "1px solid rgba(99, 102, 241, 0.2)",
-                  borderRadius: "50%",
-                  width: isMobile ? "48px" : "40px",
-                  height: isMobile ? "48px" : "40px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  cursor: "pointer",
-                  transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
-                  color: "#6366f1",
-                  flexShrink: 0,
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "rgba(99, 102, 241, 0.2)";
-                  e.currentTarget.style.transform = "scale(1.05)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "rgba(99, 102, 241, 0.1)";
-                  e.currentTarget.style.transform = "scale(1)";
-                }}
-              >
-                <ChevronLeft size={isMobile ? 24 : 20} />
-              </button>
-            )}
-
-            {/* Cards with Improved Mobile Layout */}
-            <div
-              style={{
-                display: "flex",
-                gap: isMobile ? "0" : "1.5rem",
-                flex: 1,
-                justifyContent: "center",
-                overflow: "hidden",
-                position: "relative",
-                minHeight: isMobile ? "180px" : "auto",
-              }}
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  gap: isMobile ? "0" : "1.5rem",
-                  transition: "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                  transform: isMobile 
-                    ? `translateX(-${currentPage * 100}%)` 
-                    : getTransformValue(),
-                  width: isMobile ? `${cards.length * 100}%` : "100%",
-                  willChange: "transform",
-                }}
-              >
-                {cards.map((card, index) => {
-                  const CardIcon = card.icon;
-                  return (
+            {cards.map((card, index) => {
+              const CardIcon = card.icon;
+              return (
+                <div
+                  key={index}
+                  style={{
+                    background:
+                      "linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%)",
+                    padding: "1.5rem",
+                    borderRadius: "12px",
+                    border: "1px solid rgba(99, 102, 241, 0.2)",
+                    transition: "all 0.3s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = "translateY(-2px)";
+                    e.currentTarget.style.boxShadow =
+                      "0 10px 20px rgba(99, 102, 241, 0.1)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = "translateY(0)";
+                    e.currentTarget.style.boxShadow = "none";
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "1rem",
+                      marginBottom: "1rem",
+                    }}
+                  >
                     <div
-                      key={index}
                       style={{
-                        flex: isMobile ? "0 0 auto" : "0 0 auto",
-                        width: isMobile ? "calc(100% - 1rem)" : "calc(33.333% - 1rem)",
-                        background:
-                          "linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%)",
-                        padding: isMobile ? "1rem" : "1rem",
+                        fontSize: "1.5rem",
+                        color: "#8b5cf6",
+                        background: "rgba(139, 92, 246, 0.1)",
+                        padding: "0.75rem",
                         borderRadius: "12px",
-                        border: "1px solid rgba(99, 102, 241, 0.2)",
-                        transition: "all 0.3s ease",
                         flexShrink: 0,
-                        margin: isMobile ? "0 0.5rem" : "0",
-                        minHeight: isMobile ? "160px" : "auto",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "space-between",
-                        maxWidth: isMobile ? "calc(100vw - 8rem)" : "none",
-                      }}
-                      onMouseEnter={(e) => {
-                        if (!isMobile) {
-                          e.currentTarget.style.transform = "translateY(-2px)";
-                          e.currentTarget.style.boxShadow =
-                            "0 10px 20px rgba(99, 102, 241, 0.1)";
-                        }
-                      }}
-                      onMouseLeave={(e) => {
-                        if (!isMobile) {
-                          e.currentTarget.style.transform = "translateY(0)";
-                          e.currentTarget.style.boxShadow = "none";
-                        }
                       }}
                     >
-                      <div>
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "0.75rem",
-                            marginBottom: "1rem",
-                          }}
-                        >
-                          <div
-                            style={{
-                              fontSize: "1.25rem",
-                              color: "#8b5cf6",
-                              background: "rgba(139, 92, 246, 0.1)",
-                              padding: isMobile ? "0.5rem" : "0.375rem",
-                              borderRadius: "8px",
-                              flexShrink: 0,
-                            }}
-                          >
-                            <CardIcon size={isMobile ? 20 : 16} />
-                          </div>
-                          <h3
-                            style={{
-                              fontSize: isMobile ? "1rem" : "1rem",
-                              fontWeight: "600",
-                              color: "#8b5cf6",
-                              margin: 0,
-                              lineHeight: "1.3",
-                            }}
-                          >
-                            {card.title}
-                          </h3>
-                        </div>
-                        <p
-                          style={{
-                            color: "#9ca3af",
-                            lineHeight: "1.5",
-                            margin: 0,
-                            fontSize: isMobile ? "0.875rem" : "0.875rem",
-                          }}
-                        >
-                          {card.description}
-                        </p>
-                      </div>
+                      <CardIcon size={24} />
                     </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Right Arrow - Larger touch target on mobile */}
-            {(isMobile ? currentPage < cards.length - 1 : currentPage < 1) && (
-              <button
-                onClick={goToNextPage}
-                style={{
-                  background: "rgba(99, 102, 241, 0.1)",
-                  border: "1px solid rgba(99, 102, 241, 0.2)",
-                  borderRadius: "50%",
-                  width: isMobile ? "48px" : "40px",
-                  height: isMobile ? "48px" : "40px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  cursor: "pointer",
-                  transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
-                  color: "#6366f1",
-                  flexShrink: 0,
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "rgba(99, 102, 241, 0.2)";
-                  e.currentTarget.style.transform = "scale(1.05)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "rgba(99, 102, 241, 0.1)";
-                  e.currentTarget.style.transform = "scale(1)";
-                }}
-              >
-                <ChevronRight size={isMobile ? 24 : 20} />
-              </button>
-            )}
-          </div>
-
-          {/* Improved Page Indicators */}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              gap: "0.75rem",
-              marginTop: "1.5rem",
-            }}
-          >
-            {(isMobile ? cards : [0, 1]).map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentPage(index)}
-                style={{
-                  width: isMobile ? "8px" : "6px",
-                  height: isMobile ? "8px" : "6px",
-                  borderRadius: "50%",
-                  border: "none",
-                  background: currentPage === index ? "#6366f1" : "#d1d5db",
-                  cursor: "pointer",
-                  transition: "all 0.3s ease",
-                  transform: currentPage === index ? "scale(1.2)" : "scale(1)",
-                }}
-              />
-            ))}
+                    <h3
+                      style={{
+                        fontSize: "1.25rem",
+                        fontWeight: "600",
+                        color: "#8b5cf6",
+                        margin: 0,
+                        lineHeight: "1.3",
+                      }}
+                    >
+                      {card.title}
+                    </h3>
+                  </div>
+                  <p
+                    style={{
+                      color: "#9ca3af",
+                      lineHeight: "1.6",
+                      margin: 0,
+                      fontSize: "1rem",
+                      paddingLeft: "4rem",
+                    }}
+                  >
+                    {card.description}
+                  </p>
+                </div>
+              );
+            })}
           </div>
         </div>
       )}
