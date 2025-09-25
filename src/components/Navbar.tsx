@@ -209,7 +209,7 @@ export default function Navbar() {
           >
             <div
               className="mobile-nav-links"
-              style={{ display: "flex", flexDirection: "column", gap: 32 }}
+              style={{ display: "flex", flexDirection: "column", gap: 16 }}
               onClick={(e) => e.stopPropagation()}
             >
               {navLinks.map((link) => {
@@ -259,10 +259,10 @@ export default function Navbar() {
               <div
                 className="mobile-nav-cta"
                 style={{
-                  marginTop: 32,
+                  marginTop: 20,
                   display: "flex",
                   flexDirection: "column",
-                  gap: 16,
+                  gap: 12,
                 }}
               >
                 {!isSignedIn ? (
