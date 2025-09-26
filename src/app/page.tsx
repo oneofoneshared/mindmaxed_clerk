@@ -792,7 +792,7 @@ export default function Home() {
                 color: "#6b7280",
                 fontWeight: "500"
               }}>
-                — Dustin Dean, PMHNP-BC | "The Dean of Zen"
+                — Dustin Dean, PMHNP-BC | &ldquo;The Dean of Zen&rdquo;
               </div>
             </div>
           </div>
