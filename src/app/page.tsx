@@ -775,8 +775,8 @@ export default function Home() {
                   top: "-1rem",
                   left: "-1rem",
                   fontFamily: "serif"
-                }}>"</span>
-                The most successful people I know have a secret: they invest five minutes daily in their mental fitness. It's like having a personal reset button for your mind. Once you experience it, you'll wonder how you ever lived without it.
+                }}>&ldquo;</span>
+                The most successful people I know have a secret: they invest five minutes daily in their mental fitness. It&apos;s like having a personal reset button for your mind. Once you experience it, you&apos;ll wonder how you ever lived without it.
                 <span style={{
                   fontSize: "3rem",
                   color: "#8b5cf6",
@@ -784,7 +784,7 @@ export default function Home() {
                   bottom: "-2rem",
                   right: "0",
                   fontFamily: "serif"
-                }}>"</span>
+                }}>&rdquo;</span>
               </blockquote>
               <div style={{
                 marginTop: "1.5rem",
