@@ -232,6 +232,95 @@ export default function Home() {
       {/* Hero Section */}
       <ElevenLabsHomepageWidget />
 
+      {/* Dustin Dean Quote Section - Moved to Top */}
+      <section style={{ 
+        padding: "2rem 0 1rem 0", 
+        background: "linear-gradient(135deg, rgba(99, 102, 241, 0.03) 0%, rgba(139, 92, 246, 0.02) 100%)",
+        borderBottom: "1px solid rgba(99, 102, 241, 0.08)"
+      }}>
+        <div className="container">
+          <div style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "1.5rem",
+            flexWrap: "wrap",
+            maxWidth: "900px",
+            margin: "0 auto"
+          }}>
+            {/* Dustin's Photo - Smaller */}
+            <div style={{
+              flexShrink: 0,
+              textAlign: "center"
+            }}>
+              <Image
+                src="/assets/images/coaches/dustin.jpg"
+                alt="Dustin Dean, PMHNP-BC"
+                width={80}
+                height={80}
+                style={{
+                  borderRadius: "50%",
+                  border: "3px solid rgba(139, 92, 246, 0.2)",
+                  boxShadow: "0 4px 16px rgba(139, 92, 246, 0.15)"
+                }}
+              />
+              <div style={{
+                marginTop: "0.5rem",
+                fontSize: "0.75rem",
+                color: "#8b5cf6",
+                fontWeight: "600"
+              }}>
+                PMHNP-BC
+              </div>
+            </div>
+
+            {/* Quote - Smaller and Lighter */}
+            <div style={{
+              flex: 1,
+              minWidth: "280px",
+              maxWidth: "600px"
+            }}>
+              <blockquote style={{
+                fontSize: "1.1rem",
+                fontWeight: "500",
+                color: "#9ca3af",
+                lineHeight: "1.4",
+                fontStyle: "italic",
+                margin: 0,
+                position: "relative"
+              }}>
+                <span style={{
+                  fontSize: "1.8rem",
+                  color: "#8b5cf6",
+                  position: "absolute",
+                  top: "-0.5rem",
+                  left: "-0.8rem",
+                  fontFamily: "serif"
+                }}>&ldquo;</span>
+                The most successful people I know have a secret: they invest five minutes daily in their mental fitness. It&apos;s like having a personal reset button for your mind.
+                <span style={{
+                  fontSize: "1.8rem",
+                  color: "#8b5cf6",
+                  position: "absolute",
+                  bottom: "-1rem",
+                  right: "0",
+                  fontFamily: "serif"
+                }}>&rdquo;</span>
+              </blockquote>
+              <div style={{
+                marginTop: "0.75rem",
+                fontSize: "0.875rem",
+                color: "#8b5cf6",
+                fontWeight: "500",
+                textAlign: "right"
+              }}>
+                — Dustin Dean, &ldquo;The Dean of Zen&rdquo;
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="hero" id="hero">
         <div className="hero-background">
           <div className="grid-pattern"></div>
@@ -704,95 +793,6 @@ export default function Home() {
                   prior to MindMaxxed sessions to maximize your time and
                   potential for change
                 </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Dustin Dean Quote Section */}
-      <section style={{ 
-        padding: "4rem 0", 
-        background: "linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(139, 92, 246, 0.03) 100%)",
-        borderTop: "1px solid rgba(99, 102, 241, 0.1)",
-        borderBottom: "1px solid rgba(99, 102, 241, 0.1)"
-      }}>
-        <div className="container">
-          <div style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "3rem",
-            flexWrap: "wrap",
-            maxWidth: "1000px",
-            margin: "0 auto"
-          }}>
-            {/* Dustin's Photo */}
-            <div style={{
-              flexShrink: 0,
-              textAlign: "center"
-            }}>
-              <Image
-                src="/assets/images/coaches/dustin.jpg"
-                alt="Dustin Dean, PMHNP-BC"
-                width={150}
-                height={150}
-                style={{
-                  borderRadius: "50%",
-                  border: "4px solid rgba(139, 92, 246, 0.3)",
-                  boxShadow: "0 8px 32px rgba(139, 92, 246, 0.2)"
-                }}
-              />
-              <div style={{
-                marginTop: "1rem",
-                fontSize: "0.875rem",
-                color: "#8b5cf6",
-                fontWeight: "600"
-              }}>
-                PMHNP-BC | Brain Fitness Pioneer
-              </div>
-            </div>
-
-            {/* Quote */}
-            <div style={{
-              flex: 1,
-              minWidth: "300px",
-              maxWidth: "600px"
-            }}>
-              <blockquote style={{
-                fontSize: "1.5rem",
-                fontWeight: "600",
-                color: "#374151",
-                lineHeight: "1.4",
-                fontStyle: "italic",
-                margin: 0,
-                position: "relative"
-              }}>
-                <span style={{
-                  fontSize: "3rem",
-                  color: "#8b5cf6",
-                  position: "absolute",
-                  top: "-1rem",
-                  left: "-1rem",
-                  fontFamily: "serif"
-                }}>&ldquo;</span>
-                The most successful people I know have a secret: they invest five minutes daily in their mental fitness. It&apos;s like having a personal reset button for your mind. Once you experience it, you&apos;ll wonder how you ever lived without it.
-                <span style={{
-                  fontSize: "3rem",
-                  color: "#8b5cf6",
-                  position: "absolute",
-                  bottom: "-2rem",
-                  right: "0",
-                  fontFamily: "serif"
-                }}>&rdquo;</span>
-              </blockquote>
-              <div style={{
-                marginTop: "1.5rem",
-                fontSize: "1rem",
-                color: "#6b7280",
-                fontWeight: "500"
-              }}>
-                — Dustin Dean, PMHNP-BC | &ldquo;The Dean of Zen&rdquo;
               </div>
             </div>
           </div>
