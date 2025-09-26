@@ -762,7 +762,7 @@ export default function Home() {
               <blockquote style={{
                 fontSize: "1.5rem",
                 fontWeight: "600",
-                color: "#1f2937",
+                color: "#374151",
                 lineHeight: "1.4",
                 fontStyle: "italic",
                 margin: 0,
