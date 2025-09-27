@@ -234,7 +234,7 @@ export default function Home() {
 
       {/* Dustin Dean Quote Section - Moved to Top */}
       <section style={{ 
-        padding: "2rem 0 1rem 0", 
+        padding: "1.5rem 0 0.5rem 0", 
         background: "linear-gradient(135deg, rgba(99, 102, 241, 0.03) 0%, rgba(139, 92, 246, 0.02) 100%)",
         borderBottom: "1px solid rgba(99, 102, 241, 0.08)"
       }}>
