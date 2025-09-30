@@ -964,7 +964,7 @@ export default function Home() {
                   transitions with confidence and clarity.
                 </p>
                 <div className="coach-credentials">
-                  <span className="credential">Certified Life Coach</span>
+                  <span className="credential">Life Coach</span>
                   <span className="credential">15+ Years Experience</span>
                   <span className="credential">Cultural Liaison Expert</span>
                 </div>
