@@ -20,6 +20,7 @@ export default function ElevenLabsConversation({
   const [error, setError] = useState<string | null>(null);
   const [volume, setVolumeState] = useState(0.7);
   const [hasSpoken, setHasSpoken] = useState(false);
+  const [isFullScreen, setIsFullScreen] = useState(false);
   const audioElementRef = useRef<HTMLAudioElement | null>(null);
 
   const conversation = useConversation({
@@ -74,6 +75,23 @@ export default function ElevenLabsConversation({
       setHasSpoken(true);
     }
   }, [conversation.isSpeaking]);
+
+  // Handle full-screen mode when connected
+  useEffect(() => {
+    setIsFullScreen(isConnected);
+    
+    // Prevent body scroll when in full-screen mode
+    if (isConnected) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isConnected]);
 
   // Update volume when it changes
   useEffect(() => {
@@ -202,18 +220,35 @@ export default function ElevenLabsConversation({
   return (
     <div
       style={{
-        width: "100%",
-        maxWidth: "600px",
-        margin: "0 auto",
-        padding: "2.5rem",
+        // Dynamic sizing based on full-screen state
+        width: isFullScreen ? "100vw" : "100%",
+        height: isFullScreen ? "100vh" : "auto",
+        maxWidth: isFullScreen ? "none" : "600px",
+        margin: isFullScreen ? "0" : "0 auto",
+        padding: isFullScreen ? "3rem 2rem" : "2.5rem",
+        
+        // Keep same visual styling
         background:
           "linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(139, 92, 246, 0.04) 100%)",
-        borderRadius: "24px",
-        border: "1px solid rgba(99, 102, 241, 0.2)",
+        borderRadius: isFullScreen ? "0" : "24px",
+        border: isFullScreen ? "none" : "1px solid rgba(99, 102, 241, 0.2)",
         backdropFilter: "blur(20px)",
-        boxShadow: "0 20px 40px rgba(99, 102, 241, 0.1)",
-        position: "relative",
+        boxShadow: isFullScreen ? "none" : "0 20px 40px rgba(99, 102, 241, 0.1)",
+        
+        // Positioning and layout
+        position: isFullScreen ? "fixed" : "relative",
+        top: isFullScreen ? "0" : "auto",
+        left: isFullScreen ? "0" : "auto",
+        zIndex: isFullScreen ? 9999 : "auto",
         overflow: "hidden",
+        
+        // Smooth transitions
+        transition: "all 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+        
+        // Center content when full-screen
+        display: isFullScreen ? "flex" : "block",
+        alignItems: isFullScreen ? "center" : "stretch",
+        justifyContent: isFullScreen ? "center" : "stretch",
       }}
     >
       {/* Animated background elements */}
@@ -418,7 +453,8 @@ export default function ElevenLabsConversation({
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "1rem",
+                gap: isFullScreen ? "2rem" : "1rem",
+                marginBottom: isFullScreen ? "2rem" : "0",
               }}
             >
               {/* Voice lines */}
@@ -426,7 +462,7 @@ export default function ElevenLabsConversation({
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  gap: "0.25rem",
+                  gap: isFullScreen ? "0.5rem" : "0.25rem",
                 }}
               >
                 {[
@@ -436,10 +472,12 @@ export default function ElevenLabsConversation({
                   <div
                     key={line}
                     style={{
-                      width: "3px",
-                      height: conversation.isSpeaking ? "20px" : "8px",
+                      width: isFullScreen ? "6px" : "3px",
+                      height: conversation.isSpeaking 
+                        ? (isFullScreen ? "40px" : "20px") 
+                        : (isFullScreen ? "16px" : "8px"),
                       background: "#6366f1",
-                      borderRadius: "2px",
+                      borderRadius: "3px",
                       opacity: conversation.isSpeaking ? 1 : 0.3,
                       animation: conversation.isSpeaking
                         ? `voiceLine ${0.6 + line * 0.1}s ease-in-out infinite`
@@ -455,14 +493,14 @@ export default function ElevenLabsConversation({
               <button
                 onClick={stopConversation}
                 style={{
-                  padding: "0.5rem",
-                  borderRadius: "8px",
+                  padding: isFullScreen ? "1rem" : "0.5rem",
+                  borderRadius: isFullScreen ? "12px" : "8px",
                   border: "none",
                   fontWeight: "600",
                   cursor: "pointer",
                   transition: "all 0.3s ease",
-                  width: "32px",
-                  height: "32px",
+                  width: isFullScreen ? "48px" : "32px",
+                  height: isFullScreen ? "48px" : "32px",
                   background:
                     "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)",
                   color: "white",
@@ -470,6 +508,9 @@ export default function ElevenLabsConversation({
                   alignItems: "center",
                   justifyContent: "center",
                   boxShadow: "0 4px 12px rgba(239, 68, 68, 0.3)",
+                  // Mobile touch target optimization
+                  minWidth: "44px",
+                  minHeight: "44px",
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform =
@@ -486,8 +527,8 @@ export default function ElevenLabsConversation({
               >
                 <div
                   style={{
-                    width: "12px",
-                    height: "12px",
+                    width: isFullScreen ? "16px" : "12px",
+                    height: isFullScreen ? "16px" : "12px",
                     background: "white",
                     borderRadius: "2px",
                   }}
