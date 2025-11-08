@@ -179,8 +179,8 @@ export default function ElevenLabsConversation({
       // Pass email as a dynamic variable that the agent can use
       const dynamicVariables: Record<string, string> = {};
       if (userEmail) {
-        dynamicVariables.user_email = userEmail;
-        console.log("Adding user_email as dynamic variable:", userEmail);
+        dynamicVariables.email_address = userEmail;
+        console.log("Adding email_address as dynamic variable:", userEmail);
       }
       if (userId) {
         dynamicVariables.user_id = userId;
