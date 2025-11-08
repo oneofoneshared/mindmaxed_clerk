@@ -1177,8 +1177,8 @@ export default function Home() {
             <div className="contact-info">
               <p>
                 Questions? Email us at{" "}
-                <a href="mailto:hello@mindmaxed.com" className="contact-link">
-                  hello@mindmaxed.com
+                <a href="mailto:support@1of1publishing.com" className="contact-link">
+                  support@1of1publishing.com
                 </a>
               </p>
             </div>

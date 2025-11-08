@@ -138,18 +138,12 @@ export default function Footer() {
             <ul className="text-gray-600 space-y-1">
               <li>
                 <a
-                  href="mailto:hello@mindmaxed.com"
+                  href="mailto:support@1of1publishing.com"
                   className="hover:underline"
                 >
-                  hello@mindmaxed.com
+                  support@1of1publishing.com
                 </a>
               </li>
-              <li>
-                <a href="tel:+1234567890" className="hover:underline">
-                  +1 (234) 567-8900
-                </a>
-              </li>
-              <li>Available 7 days a week</li>
             </ul>
           </div>
         </div>

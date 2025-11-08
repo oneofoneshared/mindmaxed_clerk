@@ -403,50 +403,17 @@ export default function ContactPage() {
                     Email
                   </h3>
                   <a
-                    href="mailto:hello@mindmaxed.com"
+                    href="mailto:support@1of1publishing.com"
                     className="email-link"
                     style={{ color: "#6366f1", textDecoration: "underline" }}
                   >
-                    hello@mindmaxed.com
+                    support@1of1publishing.com
                   </a>
                   <div
                     className="method-note"
                     style={{ color: "#6b7280", fontSize: "0.95rem" }}
                   >
                     We respond within 24 hours
-                  </div>
-                </div>
-              </div>
-              <div
-                className="contact-method"
-                style={{
-                  display: "flex",
-                  alignItems: "flex-start",
-                  gap: "1rem",
-                }}
-              >
-                <span
-                  className="icon"
-                  style={{ fontSize: "1.5rem", color: "#6366f1" }}
-                >
-                  📞
-                </span>
-                <div>
-                  <h3 className="method-title" style={{ fontWeight: 600 }}>
-                    Phone
-                  </h3>
-                  <a
-                    href="tel:+1234567890"
-                    className="phone-link"
-                    style={{ color: "#6366f1", textDecoration: "underline" }}
-                  >
-                    +1 (234) 567-8900
-                  </a>
-                  <div
-                    className="method-note"
-                    style={{ color: "#6b7280", fontSize: "0.95rem" }}
-                  >
-                    Available 7 days a week
                   </div>
                 </div>
               </div>
