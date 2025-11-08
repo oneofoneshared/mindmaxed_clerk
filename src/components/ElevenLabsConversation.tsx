@@ -160,23 +160,23 @@ export default function ElevenLabsConversation({
         connectionType: "webrtc";
         user_id?: string;
         voice_id?: string;
-        email_address?: string;
         apiKey?: string;
       } = {
         agentId,
         connectionType: "webrtc",
       };
 
-      if (userId) {
+      // Use email address as user_id if available, otherwise fall back to userId
+      if (userEmail) {
+        sessionOptions.user_id = userEmail;
+        console.log("Using email as user_id:", userEmail);
+      } else if (userId) {
         sessionOptions.user_id = userId;
+        console.log("Using Clerk user ID as user_id:", userId);
       }
 
       if (voiceId) {
         sessionOptions.voice_id = voiceId;
-      }
-
-      if (userEmail) {
-        sessionOptions.email_address = userEmail;
       }
 
       // Add API key if available
