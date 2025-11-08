@@ -8,12 +8,14 @@ interface ElevenLabsConversationProps {
   agentId: string;
   userId?: string;
   voiceId?: string;
+  userEmail?: string;
 }
 
 export default function ElevenLabsConversation({
   agentId,
   userId,
   voiceId,
+  userEmail,
 }: ElevenLabsConversationProps) {
   const [isConnected, setIsConnected] = useState(false);
   const [isStarting, setIsStarting] = useState(false);
@@ -146,6 +148,7 @@ export default function ElevenLabsConversation({
       console.log("Starting conversation with agent:", agentId);
       console.log("Voice ID:", voiceId);
       console.log("User ID:", userId);
+      console.log("User Email:", userEmail);
 
       // Request microphone access first
       await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -157,6 +160,7 @@ export default function ElevenLabsConversation({
         connectionType: "webrtc";
         user_id?: string;
         voice_id?: string;
+        email_address?: string;
         apiKey?: string;
       } = {
         agentId,
@@ -169,6 +173,10 @@ export default function ElevenLabsConversation({
 
       if (voiceId) {
         sessionOptions.voice_id = voiceId;
+      }
+
+      if (userEmail) {
+        sessionOptions.email_address = userEmail;
       }
 
       // Add API key if available

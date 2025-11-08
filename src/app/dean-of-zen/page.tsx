@@ -123,6 +123,7 @@ export default function DeanOfZenPage() {
             }
             voiceId={process.env.NEXT_PUBLIC_ELEVENLABS_VOICE_ID}
             userId={user?.id}
+            userEmail={user?.primaryEmailAddress?.emailAddress}
           />
         </div>
       )}
