@@ -160,7 +160,7 @@ export default function ElevenLabsConversation({
         connectionType: "webrtc";
         user_id?: string;
         voice_id?: string;
-        dynamic_variables?: Record<string, string>;
+        dynamicVariables?: Record<string, string>;
         apiKey?: string;
       } = {
         agentId,
@@ -188,7 +188,7 @@ export default function ElevenLabsConversation({
       }
       
       if (Object.keys(dynamicVariables).length > 0) {
-        sessionOptions.dynamic_variables = dynamicVariables;
+        sessionOptions.dynamicVariables = dynamicVariables;
       }
 
       // Add API key if available
