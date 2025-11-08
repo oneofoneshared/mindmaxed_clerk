@@ -160,23 +160,35 @@ export default function ElevenLabsConversation({
         connectionType: "webrtc";
         user_id?: string;
         voice_id?: string;
+        dynamic_variables?: Record<string, string>;
         apiKey?: string;
       } = {
         agentId,
         connectionType: "webrtc",
       };
 
-      // Use email address as user_id if available, otherwise fall back to userId
-      if (userEmail) {
-        sessionOptions.user_id = userEmail;
-        console.log("Using email as user_id:", userEmail);
-      } else if (userId) {
+      // Use Clerk user ID for user_id (for system identification)
+      if (userId) {
         sessionOptions.user_id = userId;
-        console.log("Using Clerk user ID as user_id:", userId);
       }
 
       if (voiceId) {
         sessionOptions.voice_id = voiceId;
+      }
+
+      // Pass email as a dynamic variable that the agent can use
+      const dynamicVariables: Record<string, string> = {};
+      if (userEmail) {
+        dynamicVariables.user_email = userEmail;
+        console.log("Adding user_email as dynamic variable:", userEmail);
+      }
+      if (userId) {
+        dynamicVariables.user_id = userId;
+        console.log("Adding user_id as dynamic variable:", userId);
+      }
+      
+      if (Object.keys(dynamicVariables).length > 0) {
+        sessionOptions.dynamic_variables = dynamicVariables;
       }
 
       // Add API key if available
